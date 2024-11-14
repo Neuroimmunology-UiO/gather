@@ -1,4 +1,3 @@
-![Figure](gather.jpeg)
 
 # GATHER
 
