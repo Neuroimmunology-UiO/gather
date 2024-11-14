@@ -1,6 +1,6 @@
-![Figure](path/to/your/figure.png)
+![Figure](gather.jpeg)
 
-# Gather
+# GATHER
 
 This repository provides the environment setup for `gather`, including all necessary dependencies. Follow the instructions below to create and activate the environment using `conda`.
 
