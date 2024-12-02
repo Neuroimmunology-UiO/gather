@@ -1,4 +1,4 @@
-![Logo](gather.jpg "Our Logo")
+![Logo](gatherr.jpg "Our Logo")
 
 # GATHER
 
