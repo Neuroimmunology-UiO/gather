@@ -17,7 +17,7 @@ import pandas as pd
 import os
 from Bio.Seq import Seq
 import subprocess
-import difflib
+from difflib import SequenceMatcher
 import argparse
 
 
@@ -170,7 +170,7 @@ def run_bcalm(input_file, kmer_size, abundance_min):
     
     # Check if the command was successful
     if result.returncode == 0:
-        print("bcalm ran successfully!")
+        print("BCALM ran successfully!")
     else:
         print("Error running bcalm:")
         raise RuntimeError("BCALM command failed with return code {}".format(result.returncode))
@@ -296,7 +296,7 @@ def find_overlap_indices(array1, array2, array1_rc, array2_rc, num_jobs):
 
         # Run the parallel computation in chunks
         parallel_results = Parallel(n_jobs=num_jobs)(
-            delayed(compare_chunk)(start, end) for start, end in tqdm(chunks, desc='Processing unitigs', colour="#800080")
+            delayed(compare_chunk)(start, end) for start, end in tqdm(chunks, desc='Processing unitigs', colour="#800080", ncols=100)
         )
         
         all_indices = [indice for sublist in parallel_results for indice in sublist]
@@ -395,7 +395,7 @@ def find_optimum_path(G, wcc, unitigs, weights):
     longest_paths = []
     long_w = []
 
-    for cluster in tqdm(wcc, desc="Finding the optimum path in WCCs", colour="#800080"):
+    for cluster in tqdm(wcc, desc="Finding the optimum path in WCCs", colour="#800080", ncols=100):
         longest_path_size = len(cluster)
         max_path_avg_weight = 0
         longest_cluster_path = None
@@ -583,7 +583,7 @@ def find_best_alignments(seqs1, seqs2, num_jobs):
     
     results = Parallel(n_jobs=num_jobs)(
         delayed(process_combination)(i, j, seqs1[i], filtered_seqs2[j]) 
-        for i, j in tqdm(all_combinations, total=total_combinations, desc='Processing all combinations', colour="#800080")
+        for i, j in tqdm(all_combinations, total=total_combinations, desc='Processing pairwise alignments', colour="#800080", ncols=100)
     )
     
     # Sort the results based on A in descending order
@@ -591,32 +591,82 @@ def find_best_alignments(seqs1, seqs2, num_jobs):
 
     return sorted_results
 
-def find_most_similar(data, search_list):
-    """
-    Finds the most similar string in search_list that matches a substring in the data.
+# def find_most_similar(data, search_list):
+#     """
+#     Finds the most similar string in search_list that matches a substring in the data.
 
-    :param data: The data string containing substrings.
-    :param search_list: List of strings to match against.
-    :return: The closest match found or None if no match is found.
-    """
-    substrings = data.split()
-    close_matches = []
+#     :param data: The data string containing substrings.
+#     :param search_list: List of strings to match against.
+#     :return: The closest match found or None if no match is found.
+#     """
+#     substrings = data.split()
+#     close_matches = []
 
-    # Loop through the substrings and compare with items in the search list
-    for substring in substrings:
-        if substring.startswith("IG"):
-            # Find the closest match to the current substring in the search list
-            match = difflib.get_close_matches(substring, search_list, n=1, cutoff=0.1)
-            if match:
-                close_matches.append(match[0])
+#     # Loop through the substrings and compare with items in the search list
+#     for substring in substrings:
+#         if substring.startswith("IG"):
+#             # Find the closest match to the current substring in the search list
+#             match = difflib.get_close_matches(substring, search_list, n=1, cutoff=0.1)
+#             if match:
+#                 close_matches.append(match[0])
 
-    # Return the closest match if any match is found
-    if close_matches:
-        return close_matches[0]
-    else:
-        return None
+#     # Return the closest match if any match is found
+#     if close_matches:
+#         return close_matches[0]
+#     else:
+#         return None
 
-def process_alignment(seqs, headers, seqs_contigs, header_c, output_bcr_path, num_jobs):
+# def process_alignment(seqs, headers, seqs_contigs, header_c, output_bcr_path, num_jobs):
+#     """
+#     Processes sequence alignments and saves the processed data.
+
+#     :param seqs: List of sequences to be aligned.
+#     :param headers: List of headers corresponding to seqs.
+#     :param seqs_contigs: List of contig sequences.
+#     :param header_c: List of header sequences for contigs.
+#     :param output_bcr_path: Path to save the output BCR data.
+#     :param num_jobs: Number of parallel jobs to run.
+#     """
+#     best_alignments = find_best_alignments(seqs, seqs_contigs, num_jobs)
+    
+#     flattened_data = [
+#         (A0, A1, A2[0], A2[1], A2[2]) for A0, A1, A2 in best_alignments
+#     ]
+    
+#     df = pd.DataFrame(flattened_data, columns=["SCORE", "ALIGN_FRACTION", "IMGT_i", "CONTIG_i", "RC"])
+#     filtered_df = df[(df['SCORE'] >= 200.0) & (df['ALIGN_FRACTION'] >= 0.95)]
+    
+#     unique_unitig_indices = filtered_df['CONTIG_i'].unique().tolist()
+    
+#     output_data = []
+    
+#     for unitig_index in unique_unitig_indices:
+#         relevant_imgt_indices = filtered_df[filtered_df['CONTIG_i'] == unitig_index]['IMGT_i'].tolist()
+        
+#         collected_headers = [headers[imgt_index] for imgt_index in relevant_imgt_indices]
+#         last_elements = [header[-1] for header in collected_headers]
+#         most_have_none = last_elements.count('None') > len(last_elements) // 2
+        
+#         rc_status = filtered_df[filtered_df['CONTIG_i'] == unitig_index]['RC'].mode().iloc[0]
+        
+#         combined_header = ' '.join([string for sublist in collected_headers for string in sublist])
+#         search_list = ["IgG", "IgA", "IgM", "IgE", "IgD", "IgK", "IgL"]
+#         ig_name = find_most_similar(combined_header, search_list)
+#         seq = seqs_contigs[unitig_index]
+#         header_seq = header_c[unitig_index][0]
+#         ig_name += ',  W: ' + header_seq
+        
+#         output_seq = str(Seq(seq).reverse_complement()) if most_have_none and rc_status == 'forward' else seq
+#         output_data.append((ig_name, combined_header, output_seq))
+    
+#     # Sort based on the weight
+#     output_data.sort(key=lambda x: float(x[0].split("W: ")[-1]), reverse=True)
+    
+#     # Save the sequences in the sorted order
+#     for ig_name, combined_header, output_seq in output_data:
+#         save_to_fasta([ig_name], [output_seq], output_bcr_path, include_header=True, append=True)
+
+def process_alignment(seqs, headers, seqs_contigs, header_c, output_bcr_path, tag=False, variable=False, num_jobs=1):
     """
     Processes sequence alignments and saves the processed data.
 
@@ -625,6 +675,8 @@ def process_alignment(seqs, headers, seqs_contigs, header_c, output_bcr_path, nu
     :param seqs_contigs: List of contig sequences.
     :param header_c: List of header sequences for contigs.
     :param output_bcr_path: Path to save the output BCR data.
+    :param tag: Boolean flag to determine if tags need to be added to headers.
+    :param variable: Boolean flag to determine if the sequence is variable or heavy chain.
     :param num_jobs: Number of parallel jobs to run.
     """
     best_alignments = find_best_alignments(seqs, seqs_contigs, num_jobs)
@@ -634,37 +686,53 @@ def process_alignment(seqs, headers, seqs_contigs, header_c, output_bcr_path, nu
     ]
     
     df = pd.DataFrame(flattened_data, columns=["SCORE", "ALIGN_FRACTION", "IMGT_i", "CONTIG_i", "RC"])
-    filtered_df = df[(df['SCORE'] >= 200.0) & (df['ALIGN_FRACTION'] >= 0.95)]
+
+    filtered_df = df[(df['SCORE'] >= 200.0) & (df['ALIGN_FRACTION'] >= 0.90)]
     
     unique_unitig_indices = filtered_df['CONTIG_i'].unique().tolist()
     
     output_data = []
     
     for unitig_index in unique_unitig_indices:
-        relevant_imgt_indices = filtered_df[filtered_df['CONTIG_i'] == unitig_index]['IMGT_i'].tolist()
+        imgt_index = filtered_df[filtered_df['CONTIG_i'] == unitig_index]['IMGT_i'].tolist()[0]
         
-        collected_headers = [headers[imgt_index] for imgt_index in relevant_imgt_indices]
-        last_elements = [header[-1] for header in collected_headers]
-        most_have_none = last_elements.count('None') > len(last_elements) // 2
+        collected_headers = headers[imgt_index]
+        most_have_none = collected_headers[-1] == 'None'
         
         rc_status = filtered_df[filtered_df['CONTIG_i'] == unitig_index]['RC'].mode().iloc[0]
         
-        combined_header = ' '.join([string for sublist in collected_headers for string in sublist])
         search_list = ["IgG", "IgA", "IgM", "IgE", "IgD", "IgK", "IgL"]
-        ig_name = find_most_similar(combined_header, search_list)
+
+        matches = [SequenceMatcher(None, substring, ig.upper()).ratio() 
+                   for substring in collected_headers if substring.startswith("IG") 
+                   for ig in search_list]
+
+        ind_max = np.argmax(matches)
+        ig_name = search_list[ind_max]
         seq = seqs_contigs[unitig_index]
         header_seq = header_c[unitig_index][0]
-        ig_name += ',  W: ' + header_seq
         
-        output_seq = str(Seq(seq).reverse_complement()) if most_have_none and rc_status == 'forward' else seq
-        output_data.append((ig_name, combined_header, output_seq))
+        if tag:
+            # Add either variable_chain or heavy_chain based on the variable parameter
+            if variable:
+                ig_name += ', W: {}, variable_region'.format(header_seq)
+                output_seq = str(Seq(seq).reverse_complement()) if most_have_none and rc_status == 'reverse' else seq
+            else:
+                ig_name += ', W: {}, constant_region'.format(header_seq)
+                output_seq = str(Seq(seq).reverse_complement()) if most_have_none and rc_status == 'forward' else seq     
+        else:
+            ig_name += ', W: {}'.format(header_seq)
+            output_seq = str(Seq(seq).reverse_complement()) if most_have_none and rc_status == 'forward' else seq
+        
+        output_data.append((ig_name, output_seq))
     
-    # Sort based on the weight
-    output_data.sort(key=lambda x: float(x[0].split("W: ")[-1]), reverse=True)
+    output_data.sort(key=lambda x: float(re.search(r'\d+\.\d+', x[0]).group()), reverse=True)
+    
     
     # Save the sequences in the sorted order
-    for ig_name, combined_header, output_seq in output_data:
+    for ig_name, output_seq in output_data:
         save_to_fasta([ig_name], [output_seq], output_bcr_path, include_header=True, append=True)
+        
 
 def classify_reads(headers, sequences):
     bcr_heavy_chain = ["IgG", "IgA", "IgM", "IgE", "IgD"]
@@ -679,7 +747,7 @@ def classify_reads(headers, sequences):
         # Example: header = ['>IgG,', 'W:', '4947.541521739131']
         read_type = header[0].split(",")[0]
         
-        weight = float(header[2]) 
+        weight = float(header[2].split(",")[0])
         
         if read_type in bcr_heavy_chain:
             if read_type not in classified_reads['BCR_heavy_chain']:
@@ -853,6 +921,7 @@ def parse_arguments(package_path):
     parser.add_argument('--merge_bcrs', action='store_true', help="If set, merge BCR sequences")
     parser.add_argument('--TCR', action='store_true', help="If set, assemble TCR sequences")
     parser.add_argument('--mouse', action='store_true', help="If set, use mouse database, otherwise use human")
+    parser.add_argument('--variable_chain', action='store_true', help="If set, output both variable and heavy chains if different")
 
     args = parser.parse_args()
 
@@ -885,9 +954,9 @@ def main():
     input_unitigs_name = os.path.basename(input_rna_fastq).replace('.gz', '.unitigs.fa')
     
     path_hc = os.path.join(args.db, 'hc')
-    # path_hv = os.path.join(args.db, 'hv')
+    path_hv = os.path.join(args.db, 'hv')
     path_lc = os.path.join(args.db, 'lc')
-    # path_lv = os.path.join(args.db, 'lv')
+    path_lv = os.path.join(args.db, 'lv')
     
     output_contigs_name = input_unitigs_name.replace('unitigs', 'contigs')
     
@@ -945,21 +1014,30 @@ def main():
     
     header_hc, seqs_hc = read_fasta(path_hc, imgt_fasta=True)
     header_lc, seqs_lc = read_fasta(path_lc, imgt_fasta=True)
-    # header_hv, seqs_hv = read_fasta(path_hv, imgt_fasta=True)
-    # header_lv, seqs_lv = read_fasta(path_lv, imgt_fasta=True)
+    header_hv, seqs_hv = read_fasta(path_hv, imgt_fasta=True)
+    header_lv, seqs_lv = read_fasta(path_lv, imgt_fasta=True)
     
-    # seqs_hv = [seq.upper() for seq in seqs_hv]
-    # seqs_lv = [seq.upper() for seq in seqs_lv]
+    seqs_hv = [seq.upper() for seq in seqs_hv]
+    seqs_lv = [seq.upper() for seq in seqs_lv]
     
     header_c, seqs_contigs = read_fasta(output_path)
     
     output_contigs_name = input_unitigs_name.replace('unitigs', 'BCR' if not args.TCR else 'TCR')
     output_bcr_path = os.path.join(scratch_dir, output_contigs_name)
     
-    process_alignment(seqs_hc, header_hc, seqs_contigs, header_c, output_bcr_path, num_jobs=args.num_jobs)
-    # process_alignment(seqs_hv, header_hv, seqs_contigs, header_c, output_bcr_path, num_jobs=args.num_jobs)
-    process_alignment(seqs_lc, header_lc, seqs_contigs, header_c, output_bcr_path, num_jobs=args.num_jobs)
-    # process_alignment(seqs_lv, header_lv, seqs_contigs, header_c, output_bcr_path, num_jobs=args.num_jobs)
+    variable_chain_flag = args.variable_chain
+    
+    if variable_chain_flag:
+        process_alignment(seqs_hc, header_hc, seqs_contigs, header_c, output_bcr_path, tag=variable_chain_flag, variable=False, num_jobs=args.num_jobs)
+        process_alignment(seqs_hv, header_hv, seqs_contigs, header_c, output_bcr_path, tag=variable_chain_flag, variable=True, num_jobs=args.num_jobs)
+        process_alignment(seqs_lc, header_lc, seqs_contigs, header_c, output_bcr_path, tag=variable_chain_flag, variable=False, num_jobs=args.num_jobs)
+        process_alignment(seqs_lv, header_lv, seqs_contigs, header_c, output_bcr_path, tag=variable_chain_flag, variable=True, num_jobs=args.num_jobs)
+    
+    else:
+        process_alignment(seqs_hc, header_hc, seqs_contigs, header_c, output_bcr_path, num_jobs=args.num_jobs)
+        process_alignment(seqs_lc, header_lc, seqs_contigs, header_c, output_bcr_path, num_jobs=args.num_jobs)
+        
+        
     if args.merge_bcrs:
         headers, sequences =  process_bcr_sequences(output_bcr_path)
         

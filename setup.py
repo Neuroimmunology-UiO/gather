@@ -3,10 +3,10 @@ from setuptools import setup, find_packages
 setup(
     name="gather",
     version="0.1.0",
-    description="A short description of the gbat package",
+    description="Assembly of heavy and light chain BCR using De Bruijn graph",
     author="Neuroimmunology UiO",
     author_email="seyedmos@uio.no",
-    url="https://github.com/Neuroimmunology-UiO/GATHER.git",
+    url="https://github.com/Neuroimmunology-UiO/gather.git",
     packages=find_packages(),
     install_requires=[
         "numpy>=1.19",
@@ -18,7 +18,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'G_assembler=gather.G_assembler:main',
+            'gassembler=gather.gassembler:main',
         ],
     },
     classifiers=[

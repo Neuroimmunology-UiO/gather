@@ -24,7 +24,7 @@ requirements:
     - bioconda::bcalm
 
 about:
-  home: https://github.com/Neuroimmunology-UiO/GATHER.git
+  home: https://github.com/Neuroimmunology-UiO/gather.git
   license: Apache 2.0
   summary: "Assembly of heavy and light chain BCR using the De Bruijn graph."
 
