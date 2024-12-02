@@ -1,4 +1,4 @@
-![Logo]("gather.jpg" "Our Logo")
+![Logo]("/gather.jpg" "Our Logo")
 # GATHER
 
 This repository provides the environment setup for `gather`, including all necessary dependencies. Follow the instructions below to create and activate the environment using `conda`.
