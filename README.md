@@ -1,4 +1,4 @@
-![Logo](gatherr.jpg "Our Logo")
+#![Logo](gatherr.jpg "Our Logo")
 
 # GATHeR: Graph-based Accurate Tool for immunoglobulin HEavy- and light-chain Reconstruction
 
@@ -70,7 +70,54 @@ If you prefer to install dependencies manually or using `requirements.txt`, you 
 
 ## Usage
 
-Once you have the environment set up and activated, you can use the `gather` environment for your project. Refer to the specific usage instructions or documentation for your project.
+**GATHeR** is compatible with popular single-cell RNA sequencing (scRNA-seq) technologies, including plate-based full-length transcript methods (Smart-seq2 / Smart-seq3), and 10x Genomics Chromium.
+
+If you have scRNA-seq data (separated for each cell) in `fastq` or `fastq.gz` format, then for paired-end data, you first need to merge the reads. In Linux, this can be done with:
+
+```bash
+cat {cell_file_name}_R1.fastq.gz {cell_file_name}_R2.fastq.gz > {cell_file_name}_merged.fastq.gz
+```
+
+Then run:
+
+```bash
+sc_asm.py --seq_merged {cell_file_name}_merged.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz --seq_2 {cell_file_name}_R2.fastq.gz
+```
+
+### Output Files
+
+After a successful run, the following files will be generated:
+
+- `{cell_file_name}_merged.fastq.unitigs.fa` – Unitigs from the compact de Bruijn graph  
+- `{cell_file_name}_merged.fastq.contigs.fa` – Assembled contigs (transcriptome) using the GATHeR algorithm  
+- `{cell_file_name}_merged.fastq.BCR.fa` – Annotated BCR sequences using the GATHeR algorithm  
+
+### Single-End Data
+
+For single-end reads, you can run:
+
+```bash
+sc_asm.py --seq_merged {cell_file_name}_R1.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz
+```
+
+### SPAdes Mode for Low Read Depth / Naive B Cells
+
+If dealing with low read depth or naive B-cells, we recommend using the `--use_spades` option and reducing the `--min_freq` parameter (recommended range: 1–5):
+
+```bash
+sc_asm.py --seq_merged {cell_file_name}_merged.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz --seq_2 {cell_file_name}_R2.fastq.gz --min_freq 3 --use_spades
+```
+
+This produces additional outputs:
+
+- `{cell_file_name}_merged.fastq.BCR_contigs.fa` – Annotated BCRs from SPAdes  
+- `transcripts.fasta` – Assembled contigs (transcriptome) from SPAdes  
+
+### Notes on K-mer Size
+
+- Default k-mer size: `25`
+- Recommended rule: `k < read length - 20`
+- For short reads (e.g., 30 bp), valid k-mer sizes are around 21–25, maybe up to 27.
 
 ## Contributing
 
