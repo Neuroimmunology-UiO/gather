@@ -6,11 +6,11 @@ This repository provides the environment setup for `gather`, including all neces
 
 ## 📚 Table of Contents
 
-- [✅ Prerequisites](#-prerequisites)
-- [💾 Installation](#-installation)
-- [🚀 Usage](#-usage)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 ## ✅ Prerequisites
 
@@ -66,7 +66,7 @@ To create and activate the `gather-env` environment using the provided `environm
 
 **GATHeR** supports single-cell RNA sequencing data from technologies like Smart-seq2/3 and 10x Genomics Chromium.
 
-### 🔄 Merging Paired-End Reads
+### Merging Paired-End Reads
 
 If your reads are paired-end:
 
@@ -82,17 +82,17 @@ sc_asm.py --seq_merged {cell_file_name}_merged.fastq.gz --seq_1 {cell_file_name}
 
 ### 📂 Output Files
 
-- 📎 `{cell_file_name}_merged.fastq.unitigs.fa`: Unitigs from the cDBG graph  
-- 🧬 `{cell_file_name}_merged.fastq.contigs.fa`: Assembled contigs (transcriptome, GATHeR)  
-- 🧪 `{cell_file_name}_merged.fastq.BCR.fa`: Annotated BCR sequences (GATHeR)
+- `{cell_file_name}_merged.fastq.unitigs.fa`: Unitigs from the cDBG graph  
+- `{cell_file_name}_merged.fastq.contigs.fa`: Assembled contigs (transcriptome, GATHeR)  
+- `{cell_file_name}_merged.fastq.BCR.fa`: Annotated BCR sequences (GATHeR)
 
-### 🧷 Single-End Data
+### Single-End Data
 
 ```bash
 sc_asm.py --seq_merged {cell_file_name}_R1.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz
 ```
 
-### 🧠 SPAdes Mode for Low Coverage or Naive B Cells
+### SPAdes Mode for Low Coverage or Naive B Cells
 
 Recommended for low read depth or naive B-cells:
 
@@ -102,10 +102,10 @@ sc_asm.py --seq_merged {cell_file_name}_merged.fastq.gz --seq_1 {cell_file_name}
 
 Additional outputs:
 
-- 🧬 `{cell_file_name}_merged.fastq.BCR_contigs.fa`: Annotated BCRs from SPAdes  
-- 📄 `transcripts.fasta`: Assembled transcriptome (SPAdes)
+- `{cell_file_name}_merged.fastq.BCR_contigs.fa`: Annotated BCRs from SPAdes  
+- `transcripts.fasta`: Assembled transcriptome (SPAdes)
 
-### 🧮 K-mer Size
+### K-mer Size
 
 - Default: `k = 25`
 - ⚠️ Rule of thumb: `k < read length - 20`
@@ -115,11 +115,11 @@ Additional outputs:
 
 We welcome contributions!
 
-1. 🍴 Fork the repo
-2. 🛠️ Create a feature branch
-3. 💬 Commit changes clearly
-4. 🚀 Push to your fork
-5. 📬 Open a pull request
+1. Fork the repo
+2. Create a feature branch
+3. Commit changes clearly
+4. Push to your fork
+5. Open a pull request
 
 ## 📄 License
 
