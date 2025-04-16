@@ -4,7 +4,7 @@
 
 This repository provides the environment setup for `gather`, including all necessary dependencies. Follow the instructions below to create and activate the environment using `conda`.
 
-## 📚 Table of Contents
+## Table of Contents
 
 - [Prerequisites](#-prerequisites)
 - [Installation](#-installation)
@@ -16,7 +16,7 @@ This repository provides the environment setup for `gather`, including all neces
 
 Ensure you have Conda installed. If you don't have Conda, download and install it from the [official Anaconda website](https://www.anaconda.com/products/individual) or [Miniconda site](https://docs.conda.io/en/latest/miniconda.html).
 
-## 💾 Installation
+## Installation
 
 ### Using the Environment File
 
@@ -62,7 +62,7 @@ To create and activate the `gather-env` environment using the provided `environm
     conda install -c bioconda bcalm
     ```
 
-## 🚀 Usage
+## Usage
 
 **GATHeR** supports single-cell RNA sequencing data from technologies like Smart-seq2/3 and 10x Genomics Chromium.
 
@@ -80,7 +80,7 @@ Then run:
 sc_asm.py --seq_merged {cell_file_name}_merged.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz --seq_2 {cell_file_name}_R2.fastq.gz
 ```
 
-### 📂 Output Files
+### Output Files
 
 - `{cell_file_name}_merged.fastq.unitigs.fa`: Unitigs from the cDBG graph  
 - `{cell_file_name}_merged.fastq.contigs.fa`: Assembled contigs (transcriptome, GATHeR)  
@@ -121,6 +121,6 @@ We welcome contributions!
 4. Push to your fork
 5. Open a pull request
 
-## 📄 License
+## License
 
 Licensed under the Apache License. See the [LICENSE](LICENSE) file for details.
