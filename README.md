@@ -89,8 +89,8 @@ sc_asm.py --seq_merged {cell_file_name}_merged.fastq.gz --seq_1 {cell_file_name}
 ### Output Files
 
 - `{cell_file_name}_merged.fastq.unitigs.fa`: Unitigs from the cDBG graph  
-- `{cell_file_name}_merged.fastq.contigs.fa`: Assembled contigs (transcriptome, GATHeR)  
-- `{cell_file_name}_merged.fastq.BCR.fa`: Annotated BCR sequences (GATHeR)
+- `{cell_file_name}_merged.fastq.contigs.fa`: Assembled contigs (transcriptome, GATHeR algorithm)  
+- `{cell_file_name}_merged.fastq.BCR.fa`: Annotated BCR sequences (GATHeR algorithm)
 
 ### Single-End Data
 
@@ -109,13 +109,13 @@ sc_asm.py --seq_merged {cell_file_name}_merged.fastq.gz --seq_1 {cell_file_name}
 Additional outputs:
 
 - `{cell_file_name}_merged.fastq.BCR_contigs.fa`: Annotated BCRs from SPAdes  
-- `transcripts.fasta`: Assembled transcriptome (SPAdes)
+- `transcripts.fasta`: Assembled transcriptome (SPAdes algorithm)
 
 ### K-mer Size
 
 - Default: `k = 25`
 - ⚠️ Rule of thumb: `k < read length - 20`
-- For read length = 30 bp ➝ choose k ≈ 21–25 (maybe 27)
+- For short read lengths = 30 bp, the possibilities for kmer size are limited ➝ choose k ≈ 21–25 (maybe 27)
 
 ## 🤝 Contributing
 
