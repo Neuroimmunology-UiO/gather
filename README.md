@@ -12,7 +12,7 @@ This repository provides the environment setup for `gather`, including all neces
 - [Contributing](#-contributing)
 - [License](#-license)
 
-## ✅ Prerequisites
+## Prerequisites
 
 Ensure you have Conda installed. If you don't have Conda, download and install it from the [official Anaconda website](https://www.anaconda.com/products/individual) or [Miniconda site](https://docs.conda.io/en/latest/miniconda.html).
 
