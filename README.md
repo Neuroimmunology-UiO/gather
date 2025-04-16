@@ -1,16 +1,22 @@
-######![Logo](gatherr.jpg "Our Logo")
-
 # GATHeR: Graph-based Accurate Tool for immunoglobulin HEavy- and light-chain Reconstruction
 
 This repository provides the environment setup for `gather`, including all necessary dependencies. Follow the instructions below to create and activate the environment using `conda`.
 
 ## Table of Contents
 
-- [Prerequisites](#-prerequisites)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [Contributing](#-contributing)
-- [License](#-license)
+- [Prerequisites](#prerequisites)  
+- [Installation](#installation)  
+  - [Using the Environment File](#using-the-environment-file)  
+  - [Installing Dependencies Separately](#installing-dependencies-separately)  
+- [Usage](#usage)  
+  - [Merging Paired-End Reads](#merging-paired-end-reads)  
+  - [Output Files](#output-files)  
+  - [Single-End Data](#single-end-data)  
+  - [SPAdes Mode for Low Coverage or Naive B Cells](#spades-mode-for-low-coverage-or-naive-b-cells)  
+  - [K-mer Size](#k-mer-size)  
+- [Contributing](#contributing)  
+- [License](#license)
+
 
 ## Prerequisites
 
