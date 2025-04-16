@@ -115,7 +115,7 @@ Additional outputs:
 
 - Default: `k = 25`
 - ⚠️ Rule of thumb: `k < read length - 20`
-- For short read lengths = 30 bp, the possibilities for kmer size are limited ➝ choose k ≈ 21–25 (maybe 27)
+- For short reads (e.g., 30 bp), the feasible k-mer size range is constrained; values between 21 and 25 are generally appropriate, with 27 being a possible upper limit depending on the context.
 
 ## 🤝 Contributing
 
