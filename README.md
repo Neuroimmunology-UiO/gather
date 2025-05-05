@@ -86,6 +86,7 @@ sc_asm.py --seq_merged {cell_file_name}_merged.fastq.gz --seq_1 {cell_file_name}
 - `{cell_file_name}_merged.fastq.unitigs.fa`: Unitigs from the cDBG graph  
 - `{cell_file_name}_merged.fastq.contigs.fa`: Assembled contigs (transcriptome, GATHeR algorithm)  
 - `{cell_file_name}_merged.fastq.BCR.fa`: Annotated BCR sequences (GATHeR algorithm)
+- `{cell_file_name}_merged.fastq.BCR_HE.fa`: Filtered BCR sequences based on the weight and contiguity (GATHeR algorithm)
 
 ### Single-End Data
 
@@ -105,6 +106,7 @@ Additional outputs:
 
 - `{cell_file_name}_merged.fastq.BCR_contigus.fa`: Annotated BCRs from SPAdes  
 - `transcripts.fasta`: Assembled transcriptome (SPAdes algorithm)
+- `{cell_file_name}_merged.fastq.BCR_HE.fa`: Filtered BCR sequences based on the weight and contiguity (SPAdes algorithm)
 
 ### K-mer Size
 
