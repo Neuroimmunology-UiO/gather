@@ -93,7 +93,7 @@ sc_asm.py --seq_merged {cell_file_name}_merged.fastq.gz --seq_1 {cell_file_name}
 sc_asm.py --seq_merged {cell_file_name}_R1.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz
 ```
 
-### SPAdes Mode for Low Coverage or Naive B Cells
+### SPAdes Mode for Low Coverage or Naive/memory B Cells
 
 Recommended for low read depth or naive B-cells:
 
