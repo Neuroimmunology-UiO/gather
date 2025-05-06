@@ -163,6 +163,89 @@ outs/filtered_feature_bc_matrix/barcodes.tsv.gz
 
 **Note**: The `--num_jobs` parameter defaults to 8, but for optimal performance, set it to the maximum number of available CPU cores.
 
+## Clonality analysis
+
+After successfully assembling B-cell receptor sequences for each cell, the reconstructed heavy and light chains—each saved in separate FASTA files with identifiable headers—can be merged across all cells to perform clonality analysis.
+
+### Step 1: Prepare IgBLAST and Reference Databases
+
+To assign V(D)J genes and annotate the junctional regions, we rely on [IgBLAST](https://www.ncbi.nlm.nih.gov/igblast/) and reference data from the IMGT database. Setting up the IgBLAST environment requires a few one-time setup steps.
+
+The setup process is supported by a set of helper scripts available from the [Immcantation project](https://immcantation.org/), which can be found in their [GitHub repository](https://github.com/immcantation/immcantation/tree/master/scripts). These scripts simplify the configuration of IgBLAST and IMGT references. You will need the following setup scripts:
+
+- `fetch_igblastdb.sh` — downloads core IgBLAST databases
+- `fetch_imgtdb.sh` — downloads IMGT reference sequences
+- `clean_imgtdb.py` — cleans downloaded IMGT sequences (optional for some datasets)
+- `imgt2igblast.sh` — converts IMGT references to IgBLAST-compatible format
+
+To use these scripts, copy all the tools from the `/scripts` folder in the [Immcantation repository](https://github.com/immcantation/immcantation/tree/master/scripts) into a directory in your `PATH`.
+
+For your convenience, we provide the following script from h [Change-O IgBLAST setup guide](https://changeo.readthedocs.io/en/stable/examples/igblast.html) that automates the download, extraction, and configuration of IgBLAST (adjust version number if needed):
+
+```bash
+#!/bin/bash
+
+# Set the IgBLAST version
+VERSION="1.22.0"
+
+# Determine the operating system
+OS_TYPE=$(uname -s)
+ARCH_TYPE=$(uname -m)
+
+# Set download URL based on OS
+case "$OS_TYPE" in
+    Linux)
+        if [ "$ARCH_TYPE" = "x86_64" ]; then
+            FILE="ncbi-igblast-${VERSION}-x64-linux.tar.gz"
+        else
+            echo "Unsupported architecture: $ARCH_TYPE"
+            exit 1
+        fi
+        ;;
+    Darwin)
+        if [ "$ARCH_TYPE" = "x86_64" ]; then
+            FILE="ncbi-igblast-${VERSION}-x64-macosx.tar.gz"
+        else
+            echo "Unsupported architecture: $ARCH_TYPE"
+            exit 1
+        fi
+        ;;
+    *)
+        echo "Unsupported OS: $OS_TYPE"
+        exit 1
+        ;;
+esac
+
+# Download and extract IgBLAST
+wget "https://ftp.ncbi.nlm.nih.gov/blast/executables/igblast/release/${VERSION}/${FILE}"
+tar -zxf "${FILE}"
+
+# Copy binaries
+mkdir -p ~/bin
+cp ncbi-igblast-${VERSION}/bin/* ~/bin
+
+# Download IgBLAST reference databases
+mkdir -p ~/share/igblast
+fetch_igblastdb.sh -o ~/share/igblast
+cp -r ncbi-igblast-${VERSION}/internal_data ~/share/igblast
+cp -r ncbi-igblast-${VERSION}/optional_file ~/share/igblast
+
+# Download and convert IMGT reference sequences
+mkdir -p ~/share/germlines/imgt
+fetch_imgtdb.sh -o ~/share/germlines/imgt
+imgt2igblast.sh -i ~/share/germlines/imgt -o ~/share/igblast
+
+# Set IGDATA environment variable
+echo 'export IGDATA=~/share/igblast' >> ~/.bashrc
+export IGDATA=~/share/igblast
+
+echo "IgBLAST setup completed successfully."
+```
+
+For more details and troubleshooting, refer to the official [Change-O IgBLAST setup guide](https://changeo.readthedocs.io/en/stable/examples/igblast.html).
+
+
+
 ## License
 
 Licensed under the Apache License. See the [LICENSE](LICENSE) file for details.
