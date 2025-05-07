@@ -13,15 +13,40 @@ This repository provides the environment setup for `gather`, including all neces
 - [Contributing](#contributing)
 - [License](#license)
 
-## Prerequisites
-
-Ensure you have Conda installed. If you don't have Conda, download and install it from the [official Anaconda website](https://www.anaconda.com/products/individual) or [Miniconda site](https://docs.conda.io/en/latest/miniconda.html).
-
 ## Installation
 
-### Using the Environment File
+### Quick Setup with Singularity (Recommended)
 
-To create and activate the `gather-env` environment using the provided `environment.yml` file:
+To simplify installation and ensure reproducibility, we provide a Singularity image that includes all required tools and dependencies.
+
+**Before you begin:**  
+Make sure [Singularity](https://docs.sylabs.io/guides/latest/user-guide/) is installed and properly configured on your system. You can verify the installation with:
+
+```bash
+singularity --version
+```
+
+If not installed, follow the instructions at [Singularity’s official site](https://sylabs.io/guides/latest/user-guide/installation.html) to install it for your platform.
+
+To pull the prebuilt container image:
+
+```bash
+singularity pull gather.sif docker://neuroimmunology/gather:latest
+```
+
+You can then run commands within the container like this:
+
+```bash
+singularity exec gather.sif sc_asm.py --help
+```
+
+This method is ideal for high-performance computing clusters or systems where local installation is restricted.
+
+### Manual Environment Setup (Conda-Based)
+
+If you prefer a local development environment, you can manually install all dependencies using Conda.
+
+#### Using the Environment File
 
 1. **Clone the Repository**:
 
@@ -42,9 +67,9 @@ To create and activate the `gather-env` environment using the provided `environm
     conda activate gather-env
     ```
 
-### Installing Dependencies Separately
+#### Installing Dependencies Manually
 
-1. **Create and activate a conda environment** (optional but recommended):
+1. **Create and activate a Conda environment**:
 
     ```bash
     conda create --name gather-env python=3.8
@@ -62,6 +87,10 @@ To create and activate the `gather-env` environment using the provided `environm
     ```bash
     conda install -c bioconda bcalm
     ```
+
+---
+
+Let me know what you'd like to add or revise next!
 
 ## Usage
 
