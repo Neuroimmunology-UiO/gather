@@ -25,14 +25,15 @@ Ensure [Singularity](https://docs.sylabs.io/guides/latest/user-guide/) is instal
 ```bash
 singularity --version
 ```
+### Download the Image
 
-Once verified, you can run the GATHeR tools directly from the image without any additional installation:
+The `GATHER.sif` image is available for direct download from the [Releases section](https://github.com/Neuroimmunology-UiO/gather/releases) of our GitHub repository.
+
+Once downloaded, you can immediately run any GATHeR tool from within the container. For example:
 
 ```bash
 singularity exec GATHER.sif sc_asm.py --help
 ```
-
-This method is ideal for high-performance computing clusters or environments where software installation is restricted. The `.sif` image contains all necessary dependencies for running GATHeR workflows.
 
 ### Manual Environment Setup (Conda-Based)
 
