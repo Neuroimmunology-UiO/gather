@@ -17,30 +17,22 @@ This repository provides the environment setup for `gather`, including all neces
 
 ### Quick Setup with Singularity (Recommended)
 
-To simplify installation and ensure reproducibility, we provide a Singularity image that includes all required tools and dependencies.
+To simplify installation and ensure reproducibility, we provide a prebuilt Singularity image: `GATHER.sif`.
 
 **Before you begin:**  
-Make sure [Singularity](https://docs.sylabs.io/guides/latest/user-guide/) is installed and properly configured on your system. You can verify the installation with:
+Ensure [Singularity](https://docs.sylabs.io/guides/latest/user-guide/) is installed on your system. You can check with:
 
 ```bash
 singularity --version
 ```
 
-If not installed, follow the instructions at [Singularity’s official site](https://sylabs.io/guides/latest/user-guide/installation.html) to install it for your platform.
-
-To pull the prebuilt container image:
+Once verified, you can run the GATHeR tools directly from the image without any additional installation:
 
 ```bash
-singularity pull gather.sif docker://neuroimmunology/gather:latest
+singularity exec GATHER.sif sc_asm.py --help
 ```
 
-You can then run commands within the container like this:
-
-```bash
-singularity exec gather.sif sc_asm.py --help
-```
-
-This method is ideal for high-performance computing clusters or systems where local installation is restricted.
+This method is ideal for high-performance computing clusters or environments where software installation is restricted. The `.sif` image contains all necessary dependencies for running GATHeR workflows.
 
 ### Manual Environment Setup (Conda-Based)
 
