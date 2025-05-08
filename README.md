@@ -185,7 +185,7 @@ outs/filtered_feature_bc_matrix/barcodes.tsv.gz
 
 ## Clonality analysis
 
-After successfully assembling B-cell receptor sequences for each cell, the reconstructed heavy and light chains—each saved in separate FASTA files with identifiable headers—can be merged across all cells to perform clonality analysis.
+After successfully assembling B-cell receptor sequences for each cell, the reconstructed heavy and light chains—each saved in separate FASTA files with distinct headers—can be merged across all cells to perform clonality analysis.
 
 ### Step 1: Prepare IgBLAST and Reference Databases
 
