@@ -33,51 +33,39 @@ Once downloaded, you can immediately run any GATHeR tool from within the contain
 singularity exec GATHER.sif sc_asm.py --help
 ```
 
-### Manual Environment Setup (Conda-Based)
+### Conda-Based Installation (Alternative to Singularity)
 
-If you prefer a local development environment, you can manually install all dependencies using Conda.
+If you prefer a local development environment or wish to integrate GATHeR into an existing Conda workflow, you can install it via Conda using [Bioconda](https://bioconda.github.io/). This method is platform-independent and works well for users running Linux or macOS with Conda installed.
 
-#### Using the Environment File
+We recommend creating a dedicated environment for GATHeR:
 
-1. **Clone the Repository**:
+```bash
+conda create --name gather-env python=3.8
+conda activate gather-env
+```
 
-    ```bash
-    git clone https://github.com/Neuroimmunology-UiO/gather.git
-    cd gather
-    ```
+Once the environment is active, install the `gather` package and its core dependencies from Bioconda and Conda-Forge:
 
-2. **Create the Environment**:
+```bash
+conda install -c bioconda gather
+```
 
-    ```bash
-    conda env create -f environment.yml
-    ```
+You can also install additional dependencies listed in the `requirements.txt` file:
 
-3. **Activate the Environment**:
+```bash
+pip install -r requirements.txt
+```
 
-    ```bash
-    conda activate gather-env
-    ```
+### Dependencies
 
-#### Installing Dependencies Manually
+In addition to the Python-based tools installed above, GATHeR relies on several external tools and libraries. These include:
 
-1. **Create and activate a Conda environment**:
+<!-- You'll fill in this section next -->
 
-    ```bash
-    conda create --name gather-env python=3.8
-    conda activate gather-env
-    ```
+---
 
-2. **Install Python dependencies**:
+Let me know what you’d like to include in the `Dependencies` subsection — for example, if it should list tools like `bcalm`, `spades`, `blast`, or anything else that’s critical for the pipeline.
 
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-3. **Install `bcalm` via Bioconda**:
-
-    ```bash
-    conda install -c bioconda bcalm
-    ```
 
 ### Step 1: Prepare IgBLAST and Reference Databases
 
