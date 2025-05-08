@@ -1,4 +1,4 @@
-![Logo](gatherr.png "Our Logo")
+![Logo](gather.png "Our Logo")
 
 # GATHeR: Graph-based Accurate Tool for immunoglobulin HEavy- and light-chain Reconstruction
 
