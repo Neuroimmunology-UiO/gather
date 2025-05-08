@@ -50,12 +50,6 @@ Once the environment is active, install the `gather` package and its core depend
 conda install -c bioconda gather
 ```
 
-You can also install additional dependencies listed in the `requirements.txt` file:
-
-```bash
-pip install -r requirements.txt
-```
-
 ### Dependencies
 
 In addition to the Python-based tools installed above, GATHeR relies on several external tools and libraries. These include:
@@ -143,8 +137,6 @@ echo "IgBLAST setup completed successfully."
 ```
 
 For more details and troubleshooting, refer to the official [Change-O IgBLAST setup guide](https://changeo.readthedocs.io/en/stable/examples/igblast.html).
-
-
 
 ## Usage
 
