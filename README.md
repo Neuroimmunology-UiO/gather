@@ -1,5 +1,3 @@
-![Logo](gather.png "Our Logo")
-
 # GATHeR: Graph-based Accurate Tool for immunoglobulin HEavy- and light-chain Reconstruction
 
 This repository provides the environment setup for `gather`, including all necessary dependencies. Follow the instructions below to create and activate the environment using `conda`.
