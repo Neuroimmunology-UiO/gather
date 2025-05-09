@@ -240,8 +240,41 @@ outs/filtered_feature_bc_matrix/barcodes.tsv.gz
 
 ## Clonality analysis
 
-After successfully assembling B-cell receptor sequences for each cell, the reconstructed heavy and light chains—each saved in separate FASTA files with distinct headers—can be merged across all cells to perform clonality analysis.
+After successfully assembling B-cell receptor (BCR) sequences for each cell, the reconstructed heavy and light chains—each saved in separate FASTA files with distinct headers—can be merged across all cells to perform clonality analysis.
 
+Once merged, you can run the `clonality_analysis.py` script to perform V(D)J gene assignment, CDR3 parsing, productivity assessment, and, optionally, clonal grouping and lineage reconstruction.
+
+### Step 1: Analyze Light Chains
+
+For light chains, use the following command:
+
+```bash
+clonality_analysis.py --fasta_file Collected_light_chains.fasta --chain light
+```
+
+This will produce:
+
+- `light_chains_db-pass.tsv`: a **Change-O–like tab-delimited file** containing detailed annotations of the light chain sequences, including gene calls, junction regions, productivity, and alignment features.
+
+### Step 2: Analyze Heavy Chains with Clonal Inference and Visualization
+
+For heavy chains, you can include additional flags to enable clonal grouping and downstream visualization:
+
+```bash
+clonality_analysis.py --fasta_file Collected_heavy_chains.fasta \
+                      --chain heavy \
+                      --clonal_plot \
+                      --run_combined \
+                      --lineage_tree
+```
+
+This command will generate:
+
+- `heavy_chains_db-pass_clone-pass.tsv`: a tab-delimited file with full BCR annotations **plus clonal assignments** and **constant region polymorphism analysis**.
+- A BCR **clonal network plot**, where sequences are visualized as nodes connected by lines if they belong to the same clone (`--clonal_plot`).
+- Phylogenetic **lineage trees** of individual clones reconstructed from inferred germline sequences (`--lineage_tree`).
+
+These outputs follow the standard formats used in the [Change-O](https://changeo.readthedocs.io/) framework and are compatible with downstream tools for repertoire diversity, lineage evolution, and visualization.
 
 
 ## License
