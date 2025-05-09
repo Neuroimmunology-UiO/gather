@@ -240,7 +240,7 @@ outs/filtered_feature_bc_matrix/barcodes.tsv.gz
 
 ## Clonality analysis
 
-After successfully assembling B-cell receptor (BCR) sequences for each cell, the reconstructed heavy and light chains—each saved in separate FASTA files with distinct headers—can be merged across all cells to perform clonality analysis.
+After successfully assembling B-cell receptor (BCR) sequences for each cell, the reconstructed heavy (`Collected_heavy_chains.fasta`) and light (`Collected_light_chains.fasta`) chains—each saved in separate FASTA files with distinct headers—can be merged across all cells to perform clonality analysis.
 
 Once merged, you can run the `clonality_analysis.py` script to perform V(D)J gene assignment, CDR3 parsing, productivity assessment, and, optionally, clonal grouping and lineage reconstruction.
 
