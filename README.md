@@ -74,67 +74,24 @@ The setup process is supported by a set of helper scripts available from the [Im
 
 To use these scripts, copy all the tools from the `/scripts` folder in the [Immcantation repository](https://github.com/immcantation/immcantation/tree/master/scripts) into a directory in your `PATH`.
 
-For your convenience, we provide the following script from h [Change-O IgBLAST setup guide](https://changeo.readthedocs.io/en/stable/examples/igblast.html) that automates the download, extraction, and configuration of IgBLAST (adjust version number if needed):
+### Step 1: Prepare IgBLAST and Reference Databases
+
+To perform V(D)J annotation and clonality analysis, IgBLAST must be configured with IMGT reference sequences. This setup includes downloading IgBLAST binaries, fetching reference databases, and converting IMGT germline files into a format compatible with Change-O.
+
+For convenience, we provide an automated setup script based on the [Change-O IgBLAST setup guide](https://changeo.readthedocs.io/en/stable/examples/igblast.html). The script handles download, extraction, and configuration of the necessary files and tools.
+
+You can download the setup script from our GitHub repository:
+
+📄 [`setup_igblast_env.sh`](https://github.com/Neuroimmunology-UiO/gather/blob/main/scripts/setup_igblast_env.sh)
+
+After downloading, make the script executable and run it:
 
 ```bash
-#!/bin/bash
-
-# Set the IgBLAST version
-VERSION="1.22.0"
-
-# Determine the operating system
-OS_TYPE=$(uname -s)
-ARCH_TYPE=$(uname -m)
-
-# Set download URL based on OS
-case "$OS_TYPE" in
-    Linux)
-        if [ "$ARCH_TYPE" = "x86_64" ]; then
-            FILE="ncbi-igblast-${VERSION}-x64-linux.tar.gz"
-        else
-            echo "Unsupported architecture: $ARCH_TYPE"
-            exit 1
-        fi
-        ;;
-    Darwin)
-        if [ "$ARCH_TYPE" = "x86_64" ]; then
-            FILE="ncbi-igblast-${VERSION}-x64-macosx.tar.gz"
-        else
-            echo "Unsupported architecture: $ARCH_TYPE"
-            exit 1
-        fi
-        ;;
-    *)
-        echo "Unsupported OS: $OS_TYPE"
-        exit 1
-        ;;
-esac
-
-# Download and extract IgBLAST
-wget "https://ftp.ncbi.nlm.nih.gov/blast/executables/igblast/release/${VERSION}/${FILE}"
-tar -zxf "${FILE}"
-
-# Copy binaries
-mkdir -p ~/bin
-cp ncbi-igblast-${VERSION}/bin/* ~/bin
-
-# Download IgBLAST reference databases
-mkdir -p ~/share/igblast
-fetch_igblastdb.sh -o ~/share/igblast
-cp -r ncbi-igblast-${VERSION}/internal_data ~/share/igblast
-cp -r ncbi-igblast-${VERSION}/optional_file ~/share/igblast
-
-# Download and convert IMGT reference sequences
-mkdir -p ~/share/germlines/imgt
-fetch_imgtdb.sh -o ~/share/germlines/imgt
-imgt2igblast.sh -i ~/share/germlines/imgt -o ~/share/igblast
-
-# Set IGDATA environment variable
-echo 'export IGDATA=~/share/igblast' >> ~/.bashrc
-export IGDATA=~/share/igblast
-
-echo "IgBLAST setup completed successfully."
+chmod +x setup_igblast_env.sh
+./setup_igblast_env.sh
 ```
+
+> **Note:** You can adjust the IgBLAST version or installation directories inside the script if needed. After running it, restart your shell or run `source ~/.bashrc` to ensure the `IGDATA` environment variable is correctly set.
 
 For more details and troubleshooting, refer to the official [Change-O IgBLAST setup guide](https://changeo.readthedocs.io/en/stable/examples/igblast.html).
 
