@@ -4,7 +4,7 @@
 [![Bioconda](https://img.shields.io/badge/bioconda-available-brightgreen)](https://bioconda.github.io/)
 [![Singularity Image](https://img.shields.io/badge/singularity-image-ff69b4)](https://github.com/Neuroimmunology-UiO/gather/releases)
 
-# GATHeR: Graph-based Accurate Tool for immunoglobulin HEavy- and light-chain Reconstruction
+# 🕷️ GATHeR: Graph-based Accurate Tool for immunoglobulin HEavy- and light-chain Reconstruction
 
 This repository provides the environment setup for `gather`, including all necessary dependencies. Follow the instructions below to create and activate the environment using `conda`.
 
