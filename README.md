@@ -1,6 +1,8 @@
-[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+[![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/license-Apache%202.0-green)](LICENSE)
 [![Bioconda](https://img.shields.io/badge/bioconda-available-brightgreen)](https://bioconda.github.io/)
+[![Singularity Image](https://img.shields.io/badge/singularity-image-ff69b4)](https://github.com/Neuroimmunology-UiO/gather/releases)
 
 # GATHeR: Graph-based Accurate Tool for immunoglobulin HEavy- and light-chain Reconstruction
 
