@@ -1,0 +1,30 @@
+name: gather_env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bcalm=2.2.3
+  - python=3.12.2
+  - numpy
+  - networkx
+  - joblib
+  - tqdm
+  - biopython
+  - pandas
+  - argcomplete
+  - zlib
+  - glob2
+  - pip
+  - rich
+  - matplotlib
+  - r-base=4.3.1
+  - r-dplyr
+  - r-ggplot2
+  - r-ggrepel
+  - r-devtools
+  - r-remotes
+  - r-ape
+    #  - pip:
+    #   - git+https://github.com/Neuroimmunology-UiO/gather.git
+
