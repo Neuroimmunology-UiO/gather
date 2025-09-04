@@ -121,31 +121,17 @@ sc_asm.py --seq_merged {cell_file_name}_merged.fastq.gz --seq_1 {cell_file_name}
 
 ### Output Files
 
-- `{cell_file_name}_merged.fastq.unitigs.fa`: Unitigs from the cDBG graph  
-- `{cell_file_name}_merged.fastq.contigs.fa`: Assembled contigs (transcriptome, GATHeR algorithm)  
-- `{cell_file_name}_merged.fastq.BCR.fa`: Annotated BCR sequences (GATHeR algorithm)
-- `{cell_file_name}_merged.fastq.BCR_HE.fa`: Filtered BCR sequences based on the weight and contiguity (GATHeR algorithm)
+- `{cell_file_name}_merged.unitigs.fa`: Unitigs from the cDBG graph  
+- `{cell_file_name}_merged.contigs.fa`: Assembled contigs (transcriptome, GATHeR algorithm)  
+- `{cell_file_name}_merged.BCR_algo1.fa `: Annotated BCR sequences (GATHeR algorithm)
+- `{cell_file_name}_merged.BCR_algo2.fa `: Annotated BCR sequences (SPAdes algorithm)
+- `{cell_file_name}_merged.BCR_contiguous.fa`: Filtered BCR sequences based on the weight and contiguity using the contigs from the both algos.
 
 ### Single-End Data
 
 ```bash
 sc_asm.py --seq_merged {cell_file_name}_R1.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz
 ```
-
-### SPAdes Mode for Low Coverage or Naive/memory B Cells
-
-Recommended for low read depth or naive B-cells:
-
-```bash
-sc_asm.py --seq_merged {cell_file_name}_merged.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz --seq_2 {cell_file_name}_R2.fastq.gz --min_freq 3 --use_spades
-```
-
-Additional outputs:
-
-- `{cell_file_name}_merged.fastq.BCR_contigus.fa`: Annotated BCRs from SPAdes  
-- `transcripts.fasta`: Assembled transcriptome (SPAdes algorithm)
-- `{cell_file_name}_merged.fastq.BCR_HE.fa`: Filtered BCR sequences based on the weight and contiguity (SPAdes algorithm)
-
 ### K-mer Size
 
 - Default: `k = 25`
