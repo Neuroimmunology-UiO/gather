@@ -119,6 +119,11 @@ Then run:
 sc_asm.py --seq_merged {cell_file_name}_merged.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz --seq_2 {cell_file_name}_R2.fastq.gz
 ```
 
+### Single-End Data
+
+```bash
+sc_asm.py --seq_merged {cell_file_name}_R1.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz
+```
 ### Output Files
 
 - `{cell_file_name}_merged.unitigs.fa`: Unitigs from the cDBG graph  
@@ -127,11 +132,6 @@ sc_asm.py --seq_merged {cell_file_name}_merged.fastq.gz --seq_1 {cell_file_name}
 - `{cell_file_name}_merged.BCR_algo2.fa `: Annotated BCR sequences (SPAdes algorithm)
 - `{cell_file_name}_merged.BCR_contiguous.fa`: Filtered BCR sequences based on the weight and contiguity using the contigs from the both algos.
 
-### Single-End Data
-
-```bash
-sc_asm.py --seq_merged {cell_file_name}_R1.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz
-```
 ### K-mer Size
 
 - Default: `k = 25`
