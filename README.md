@@ -58,13 +58,30 @@ conda install -c bioconda gather
 
 ### Dependencies
 
-In addition to the Python-based tools installed above, GATHeR relies on several external tools and libraries. These include:
+In addition to the Python-based modules installed with Conda, GATHeR relies on several **external tools** and **R packages** that are required for assembly, annotation, and phylogenetic analysis.  
 
-<!-- You'll fill in this section next -->
+#### External Tools
+- **NCBI BLAST+** — required for sequence similarity searches  
+- **SPAdes** — de novo assembly of BCR sequences using de Bruijn graphs  
+- **IgPhyML** — phylogenetic inference of B-cell receptor lineages  
+- **Immcantation helper scripts** — utilities for configuring IgBLAST/IMGT references  
 
----
+#### R Packages
+- **BiocManager** — package manager for Bioconductor  
+- **treeio**, **ggtree**, **dowser** — Bioconductor packages for lineage tree analysis  
+- **dplyr**, **ggrepel** — CRAN packages for data wrangling and visualization  
 
-Let me know what you’d like to include in the `Dependencies` subsection — for example, if it should list tools like `bcalm`, `spades`, `blast`, or anything else that’s critical for the pipeline.
+To install these dependencies in one step, we provide an automated setup script:  
+
+📄 [`setup_gather_dependencies.sh`](https://github.com/Neuroimmunology-UiO/gather/blob/main/scripts/setup_gather_dependencies.sh)
+
+```bash
+# Make the script executable
+chmod +x setup_gather_dependencies.sh
+
+# Run the installer
+./setup_gather_dependencies.sh
+```
 
 
 ### Step 1: Prepare IgBLAST and Reference Databases
@@ -79,8 +96,6 @@ The setup process is supported by a set of helper scripts available from the [Im
 - `imgt2igblast.sh` — converts IMGT references to IgBLAST-compatible format
 
 To use these scripts, copy all the tools from the `/scripts` folder in the [Immcantation repository](https://github.com/immcantation/immcantation/tree/master/scripts) into a directory in your `PATH`.
-
-### Step 1: Prepare IgBLAST and Reference Databases
 
 To perform V(D)J annotation and clonality analysis, IgBLAST must be configured with IMGT reference sequences. This setup includes downloading IgBLAST binaries, fetching reference databases, and converting IMGT germline files into a format compatible with Change-O.
 
