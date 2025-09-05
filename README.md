@@ -19,7 +19,7 @@ This repository provides the environment setup for `gather`, including all neces
 
 ## Installation
 
-### Quick Setup with Singularity (Recommended)
+### Quick Setup (Linux, via Singularity – Recommended)
 
 To simplify installation and ensure reproducibility, we provide a prebuilt Singularity image: `GATHER.sif`.
 
