@@ -1,29 +1,20 @@
 #!/bin/bash
+set -euo pipefail
 
-# Set the IgBLAST version
+# IgBLAST installer (Linux & macOS)
 VERSION="1.22.0"
-
-# Determine the operating system
 OS_TYPE=$(uname -s)
 ARCH_TYPE=$(uname -m)
 
-# Set download URL based on OS
+# Pick correct tarball
 case "$OS_TYPE" in
     Linux)
-        if [ "$ARCH_TYPE" = "x86_64" ]; then
-            FILE="ncbi-igblast-${VERSION}-x64-linux.tar.gz"
-        else
-            echo "Unsupported architecture: $ARCH_TYPE"
-            exit 1
-        fi
+        [ "$ARCH_TYPE" = "x86_64" ] || { echo "Unsupported architecture: $ARCH_TYPE"; exit 1; }
+        FILE="ncbi-igblast-${VERSION}-x64-linux.tar.gz"
         ;;
     Darwin)
-        if [ "$ARCH_TYPE" = "x86_64" ]; then
-            FILE="ncbi-igblast-${VERSION}-x64-macosx.tar.gz"
-        else
-            echo "Unsupported architecture: $ARCH_TYPE"
-            exit 1
-        fi
+        [ "$ARCH_TYPE" = "x86_64" ] || { echo "Unsupported architecture: $ARCH_TYPE"; exit 1; }
+        FILE="ncbi-igblast-${VERSION}-x64-macosx.tar.gz"
         ;;
     *)
         echo "Unsupported OS: $OS_TYPE"
@@ -31,30 +22,33 @@ case "$OS_TYPE" in
         ;;
 esac
 
-# Download and extract IgBLAST
-wget "https://ftp.ncbi.nlm.nih.gov/blast/executables/igblast/release/${VERSION}/${FILE}"
+echo "==> Installing IgBLAST ${VERSION} ..."
+
+# Download & extract
+wget -q "https://ftp.ncbi.nlm.nih.gov/blast/executables/igblast/release/${VERSION}/${FILE}"
 tar -zxf "${FILE}"
+rm -f "${FILE}"
 
-# Create necessary directories
-mkdir -p ~/bin
-mkdir -p ~/share/igblast
-mkdir -p ~/share/germlines/imgt
+# Create data dirs
+mkdir -p ~/share/igblast ~/share/germlines/imgt
 
-# Copy executables to ~/bin
+# Copy executables
 cp ncbi-igblast-${VERSION}/bin/* ~/bin
 
-# Download reference databases and setup IGDATA directory
-fetch_igblastdb.sh -o ~/share/igblast
+# Copy support files
 cp -r ncbi-igblast-${VERSION}/internal_data ~/share/igblast
 cp -r ncbi-igblast-${VERSION}/optional_file ~/share/igblast
 
-# Build IgBLAST database from IMGT reference sequences
+# Fetch reference databases (requires Immcantation helper scripts in PATH)
+fetch_igblastdb.sh -o ~/share/igblast
 fetch_imgtdb.sh -o ~/share/germlines/imgt
 imgt2igblast.sh -i ~/share/germlines/imgt -o ~/share/igblast
 
-# Set IGDATA environment variable
-echo 'export IGDATA=~/share/igblast' >> ~/.bashrc
+# Export IGDATA
+if ! grep -q 'export IGDATA=~/share/igblast' ~/.bashrc; then
+    echo 'export IGDATA=~/share/igblast' >> ~/.bashrc
+fi
 export IGDATA=~/share/igblast
 
-echo "IgBLAST setup completed successfully."
-
+echo "==> IgBLAST setup completed."
+echo "   Test with: igblastn -version"
