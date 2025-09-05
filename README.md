@@ -39,6 +39,31 @@ Once downloaded, you can immediately run any GATHeR tool from within the contain
 singularity exec GATHER.sif sc_asm.py --help
 ```
 
+### Quick Setup (macOS & Linux, via Docker – Recommended for Mac)
+
+To simplify installation and ensure reproducibility, we also provide a **Docker image**.  
+This is the recommended option for **MacBook Pro (M1/M2, Apple Silicon)** users.  
+
+**Before you begin:**  
+Ensure [Docker Desktop](https://www.docker.com/products/docker-desktop/) is installed on your system. You can check with:
+
+```bash
+docker --version
+```
+
+Now, you can immediately run any GATHeR tool using the following Docker command as an example:
+
+```bash
+docker run -it \
+  -v /path/to/your/scRNAseq_folder:/data \
+  --entrypoint bash gather:1.0 \
+  -c "sc_asm.py \
+        --seq_merged /data/<merged_file.fastq> \
+        --seq_1 /data/<read1.fastq> \
+        --seq_2 /data/<read2.fastq> \
+        --output_dir /data/output \
+        --num_jobs 4"
+```
 ### Conda-Based Installation (Alternative to Singularity)
 
 If you prefer a local development environment or wish to integrate GATHeR into an existing Conda workflow, you can install it via Conda using [Bioconda](https://bioconda.github.io/). This method is platform-independent and works well for users running Linux or macOS with Conda installed.
