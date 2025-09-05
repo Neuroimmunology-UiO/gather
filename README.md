@@ -73,7 +73,7 @@ In addition to the Python-based modules installed with Conda, GATHeR relies on s
 
 To install these dependencies in one step, we provide an automated setup script:  
 
-📄 [`setup_gather_dependencies.sh`](https://github.com/Neuroimmunology-UiO/gather/blob/main/scripts/setup_gather_dependencies.sh)
+📄 [`setup_gather_dependencies.sh`](https://github.com/Neuroimmunology-UiO/gather/blob/main/scripts/setup_dependencies.sh)
 
 ```bash
 # Make the script executable
