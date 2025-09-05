@@ -88,17 +88,6 @@ chmod +x setup_gather_dependencies.sh
 
 To assign V(D)J genes and annotate the junctional regions, we rely on [IgBLAST](https://www.ncbi.nlm.nih.gov/igblast/) and reference data from the IMGT database. Setting up the IgBLAST environment requires a few one-time setup steps.
 
-The setup process is supported by a set of helper scripts available from the [Immcantation project](https://immcantation.org/), which can be found in their [GitHub repository](https://github.com/immcantation/immcantation/tree/master/scripts). These scripts simplify the configuration of IgBLAST and IMGT references. You will need the following setup scripts:
-
-- `fetch_igblastdb.sh` — downloads core IgBLAST databases
-- `fetch_imgtdb.sh` — downloads IMGT reference sequences
-- `clean_imgtdb.py` — cleans downloaded IMGT sequences (optional for some datasets)
-- `imgt2igblast.sh` — converts IMGT references to IgBLAST-compatible format
-
-To use these scripts, copy all the tools from the `/scripts` folder in the [Immcantation repository](https://github.com/immcantation/immcantation/tree/master/scripts) into a directory in your `PATH`.
-
-To perform V(D)J annotation and clonality analysis, IgBLAST must be configured with IMGT reference sequences. This setup includes downloading IgBLAST binaries, fetching reference databases, and converting IMGT germline files into a format compatible with Change-O.
-
 For convenience, we provide an automated setup script based on the [Change-O IgBLAST setup guide](https://changeo.readthedocs.io/en/stable/examples/igblast.html). The script handles download, extraction, and configuration of the necessary files and tools.
 
 You can download the setup script from our GitHub repository:
