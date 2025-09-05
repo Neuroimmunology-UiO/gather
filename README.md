@@ -62,7 +62,7 @@ In addition to the Python-based modules installed with Conda, GATHeR relies on s
 
 #### External Tools
 - **NCBI BLAST+** — required for sequence similarity searches  
-- **SPAdes** — de novo assembly of BCR sequences using de Bruijn graphs  
+- **SPAdes** — de novo RNA assembly
 - **IgPhyML** — phylogenetic inference of B-cell receptor lineages  
 - **Immcantation helper scripts** — utilities for configuring IgBLAST/IMGT references  
 
@@ -84,7 +84,7 @@ chmod +x setup_gather_dependencies.sh
 ```
 
 
-### Step 1: Prepare IgBLAST and Reference Databases
+### Prepare IgBLAST and Reference Databases
 
 To assign V(D)J genes and annotate the junctional regions, we rely on [IgBLAST](https://www.ncbi.nlm.nih.gov/igblast/) and reference data from the IMGT database. Setting up the IgBLAST environment requires a few one-time setup steps.
 
