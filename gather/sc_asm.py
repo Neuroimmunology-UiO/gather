@@ -3,7 +3,7 @@
 """
 Created on Thu Feb 20 11:23:14 2025
 
-@author: mojtaba
+@author: Neuroimmunology-UiO
 """
 
 from rich.console import Console
