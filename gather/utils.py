@@ -194,39 +194,111 @@ class CommandExecutor:
             print("Error running bcalm:")
             raise RuntimeError("BCALM command failed with return code {}".format(result.returncode))
 
-    def run_spades(self, spades_path, output_dir, input_file_1=None, input_file_2=None, is_rna=False):
-        """
-        Run the SPAdes command with specified parameters.
+    # def run_spades(self, spades_path, output_dir, input_file_1=None, input_file_2=None, is_rna=False):
+    #     """
+    #     Run the SPAdes command with specified parameters.
 
-        :param spades_path: Path to the SPAdes executable.
-        :param output_dir: Directory where SPAdes output will be stored.
-        :param input_file_1: Path to the first paired-end input file or the interlaced input file.
-        :param input_file_2: Path to the second paired-end input file.
-        :param is_rna: Boolean flag to specify whether to run SPAdes in RNA mode (default is False).
-        :return: A boolean indicating success or failure, and an error message if any.
-        """
-        # Determine if the input is interlaced or paired-end based on provided files
-        if input_file_1 and input_file_2:
-            # Use paired-end files
-            command = [spades_path, "-o", output_dir, "-1", input_file_1, "-2", input_file_2]
-        elif input_file_1 and not input_file_2:
-            # Use interlaced file
-            command = [spades_path, "-o", output_dir, "-s", input_file_1]
-        else:
-            return False, "Invalid input: Provide either both input_file_1 and input_file_2, or a single interlaced input_file_1."
+    #     :param spades_path: Path to the SPAdes executable.
+    #     :param output_dir: Directory where SPAdes output will be stored.
+    #     :param input_file_1: Path to the first paired-end input file or the interlaced input file.
+    #     :param input_file_2: Path to the second paired-end input file.
+    #     :param is_rna: Boolean flag to specify whether to run SPAdes in RNA mode (default is False).
+    #     :return: A boolean indicating success or failure, and an error message if any.
+    #     """
+    #     # Determine if the input is interlaced or paired-end based on provided files
+    #     if input_file_1 and input_file_2:
+    #         # Use paired-end files
+    #         command = [spades_path, "-o", output_dir, "-1", input_file_1, "-2", input_file_2, '-k 15,21,33,49,75']
+    #     elif input_file_1 and not input_file_2:
+    #         # Use interlaced file
+    #         command = [spades_path, "-o", output_dir, "-s", input_file_1]
+    #     else:
+    #         return False, "Invalid input: Provide either both input_file_1 and input_file_2, or a single interlaced input_file_1."
 
+    #     if is_rna:
+    #         command.append("--rna")
+
+    #     # Run the command, suppress standard output, and capture standard error
+    #     result = subprocess.run(command, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+
+    #     # Check if the command was successful
+    #     if result.returncode != 0:
+    #         error_message = result.stderr.decode('utf-8')
+    #         return False, f"SPAdes command failed with return code {result.returncode}. Error: {error_message}"
+
+    #     return True, None
+
+
+    def run_spades(self, spades_path,
+                   output_dir,
+                   input_file_1=None,
+                   input_file_2=None,
+                   is_rna=False,
+                   sensitive=False):
+        """
+        Run SPAdes / rnaSPAdes with optional “sensitive” k-mer selection.
+
+        Behavior
+        --------
+        - If sensitive == False (default): do NOT pass -k; let (rna)SPAdes auto-pick k-mers.
+        - If sensitive == True:
+            * Peek read length from the first FASTQ record (gz supported)
+            * Use k-mers: [15, 21, 33, floor(L/3, odd), floor(L/2, odd, <=127)]
+
+        Returns
+        -------
+        (success: bool, error_message: str or None)
+        """
+
+        def _odd(x):
+            return x if x % 2 else x - 1
+
+        def _peek_read_len(fq_path):
+            opener = gzip.open if fq_path.endswith((".gz", ".gzip")) else open
+            with opener(fq_path, "rt") as f:
+                f.readline()          # header
+                seq = f.readline().strip()
+            return len(seq)
+
+        # Basic checks
+        if not os.path.exists(input_file_1):
+            return False, f"Input file not found: {input_file_1}"
+        if input_file_2 and not os.path.exists(input_file_2):
+            return False, f"Input file not found: {input_file_2}"
+
+        # Build base command
+        cmd = [spades_path, "-o", output_dir]
         if is_rna:
-            command.append("--rna")
+            cmd.append("--rna")
 
-        # Run the command, suppress standard output, and capture standard error
-        result = subprocess.run(command, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        # Input flags
+        if input_file_2:
+            cmd += ["-1", input_file_1, "-2", input_file_2]
+        else:
+            # If your single file is actually interleaved PE, switch to: ['--12', input_file_1]
+            cmd += ["-s", input_file_1]
 
-        # Check if the command was successful
+        # Add k-mers only in sensitive mode
+        if sensitive:
+            read_lengths = [_peek_read_len(input_file_1)]
+            if input_file_2:
+                read_lengths.append(_peek_read_len(input_file_2))
+            L = max(read_lengths)
+
+            k1 = _odd(max(15, L // 3))
+            k2 = _odd(min(127, L // 2))
+            kmers = sorted(set([15, 21, 33, k1, k2]))
+            cmd += ["-k", ",".join(map(str, kmers))]
+
+        # Run
+        result = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
         if result.returncode != 0:
-            error_message = result.stderr.decode('utf-8')
-            return False, f"SPAdes command failed with return code {result.returncode}. Error: {error_message}"
+            return False, result.stderr.decode("utf-8", "replace")
 
         return True, None
+    
+
+    
 
     def run_blast(command_type, blast_dir, output_dir="output", **kwargs):
         """
@@ -310,7 +382,7 @@ class CommandExecutor:
 
         # Include SPAdes arguments only if `use_spades` is True
         if use_spades:
-            command.extend(["--use_spades", "--spades_path", spades_path])
+            command.extend(["--use_spades", "--sensitive", "--spades_path", spades_path])
 
         # Run the command, suppress stdout, capture stderr
         result = subprocess.run(command, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
@@ -1590,78 +1662,101 @@ class ProcessSeq:
         return result_headers, result_sequences
 
     @staticmethod
-    def process_bcr_file(path_to_bcr):
-        """Processes a BCR file to get sorted B-cell receptor sequences."""
-        headers_BCR, seqs_BCR = IO.read_fasta(path_to_bcr, imgt_fasta=False)
+    def process_bcr_file(file1, read_fasta=None, file2=None,):
+        """
+        Process one or two FASTA files with read_fasta(..., imgt_fasta=False).
 
-        filtered_H = [
-            (headers_BCR[i], seqs_BCR[i])
-            for i in range(len(headers_BCR))
-            if 'IGHV' in headers_BCR[i][0] and len(headers_BCR[i][0].split(',')) > 2
-        ]
+        Deduplication rules:
+          - Within each file: keep the longest sequence per family (allele-stripped, order-agnostic).
+          - Between files: compare families again, keep the longest sequence.
+          - Final output: split into heavies and lights, sort each by descending weight,
+            heavies always listed first.
+        """
 
-        weights_H = [
-            float(headers_BCR[i][-1])
-            for i in range(len(headers_BCR))
-            if 'IGHV' in headers_BCR[i][0] and len(headers_BCR[i][0].split(',')) > 2
-        ]
-        
-        if not filtered_H:
-            filtered_H = [
-                (headers_BCR[i], seqs_BCR[i])
-                for i in range(len(headers_BCR))
-                if 'IGH' in headers_BCR[i][0]
-            ]
-            weights_H = [
-                float(headers_BCR[i][-1])
-                for i in range(len(headers_BCR))
-                if 'IGH' in headers_BCR[i][0]
-            ]
+        heavy_const = ("IGHA", "IGHG", "IGHM", "IGHD", "IGHE")
+        heavy_var   = ("IGHV",)
 
-        filtered_L = [
-            (headers_BCR[i], seqs_BCR[i])
-            for i in range(len(headers_BCR))
-            if (
-                ('IGKV' in headers_BCR[i][0] or 'IGLV' in headers_BCR[i][0])
-                and len(headers_BCR[i][0].split(',')) > 2
-            )
-        ]
+        def gene_blob(h):
+            return re.sub(r"\s+", "", h[0]).rstrip(",")
 
-        weights_L = [
-            float(headers_BCR[i][-1])
-            for i in range(len(headers_BCR))
-            if (
-                ('IGKV' in headers_BCR[i][0] or 'IGLV' in headers_BCR[i][0])
-                and len(headers_BCR[i][0].split(',')) > 2
-            )
-        ]
+        def extract_weight(h):
+            txt = " ".join(h)
+            nums = re.findall(r"[-+]?\d*\.\d+|\d+", txt)
+            return float(nums[-1]) if nums else 0.0
 
-        if not filtered_L:
-            filtered_L = [
-                (headers_BCR[i], seqs_BCR[i])
-                for i in range(len(headers_BCR))
-                if 'IGK' in headers_BCR[i][0] or 'IGL' in headers_BCR[i][0]
-            ]
-            weights_L = [
-                float(headers_BCR[i][-1])
-                for i in range(len(headers_BCR))
-                if 'IGK' in headers_BCR[i][0] or 'IGL' in headers_BCR[i][0]
-            ]
+        def is_heavy(h):
+            blob = gene_blob(h)
+            return any(c in blob for c in heavy_const) and any(v in blob for v in heavy_var)
 
-        combined_H = sorted(zip(weights_H, filtered_H), key=lambda x: x[0], reverse=True)
-        combined_L = sorted(zip(weights_L, filtered_L), key=lambda x: x[0], reverse=True)
+        def is_light(h):
+            blob = gene_blob(h)
+            kc_kv = ("IGKC" in blob) and ("IGKV" in blob)
+            lc_lv = (("IGLC" in blob) or ("IGKL" in blob)) and ("IGLV" in blob)
+            return kc_kv or lc_lv
 
-        top_combined = combined_H[:2] + combined_L[:2]
+        def clean_len(seq):
+            return len(re.sub(r"[^A-Za-z]", "", seq))
 
-        sorted_sequences = [seq for _, (_, seq) in top_combined]
-        sorted_headers = [' '.join(header) for _, (header, _) in top_combined]
+        def family_key(sig):
+            """Create order-agnostic, allele-stripped key"""
+            genes = sig.split(",")
+            genes = [re.sub(r"\*\d+", "", g) for g in genes]
+            return tuple(sorted(set(genes)))
 
+        def process_file(fpath):
+            headers, seqs = read_fasta(fpath, imgt_fasta=False)
+            candidates = []
+            for h, s in zip(headers, seqs):
+                if not (is_heavy(h) or is_light(h)):
+                    continue
+                sig = gene_blob(h)
+                fam = family_key(sig)
+                w = extract_weight(h)
+                L = clean_len(s)
+                candidates.append((h, s, w, L, fam))
+
+            # deduplicate within this file by family → keep longest sequence
+            best = {}
+            for h, s, w, L, fam in candidates:
+                if fam not in best or L > best[fam][3]:
+                    best[fam] = (h, s, w, L, fam)
+            return list(best.values())
+
+        # --- read and process files ---
+        file1_entries = process_file(file1)
+        file2_entries = []
+        if file2 and os.path.exists(file2):
+            file2_entries = process_file(file2)
+
+        if not file2_entries:  # single-file case
+            all_entries = file1_entries
+        else:  # compare across files → keep longest sequence
+            combined = {}
+            for h, s, w, L, fam in file1_entries + file2_entries:
+                if fam not in combined or L > combined[fam][3]:
+                    combined[fam] = (h, s, w, L, fam)
+            all_entries = list(combined.values())
+
+        # --- split into heavy/light ---
+        heavies, lights = [], []
+        for h, s, w, L, fam in all_entries:
+            (heavies if is_heavy(h) else lights).append((h, s, w, L, fam))
+
+        # --- sort within category by weight ---
+        heavies.sort(key=lambda t: t[2], reverse=True)
+        lights.sort(key=lambda t: t[2], reverse=True)
+
+        final = heavies + lights
+
+        sorted_headers   = [" ".join(h) for h, _, _, _, _ in final]
+        sorted_sequences = [s for _, s, _, _, _ in final]
         return sorted_headers, sorted_sequences
+
 
     @staticmethod
     def clean_scratch_dir(scratch_dir, new_items):
         """Cleans up the specified directory except for specific file types."""
-        allowed_extensions = {'.fa', '.fasta', '.fq', '.fastq', '.gz'}
+        allowed_extensions = {'.fa', '.fq', '.fastq', '.gz'}
         for item in new_items:
             item_path = os.path.join(scratch_dir, item)
             if os.path.isfile(item_path):

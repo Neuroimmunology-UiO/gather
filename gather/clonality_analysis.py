@@ -81,7 +81,7 @@ def process_bcr_heavy_chains_cds(
         # Update DataFrame with A_fraction and A_cdomains_seq values
         for domain, frac, seq in zip(A_cdomains, A_fraction, A_cdomains_seq):
             if domain in c_domains:
-                frac_col_name = domain
+                frac_col_name = f'{domain}-identity'
                 seq_col_name = f'{domain}-seq'
                 if frac >= 0.75:
                     df1.at[row_idx, frac_col_name] = frac

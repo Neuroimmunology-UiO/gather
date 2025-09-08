@@ -44,11 +44,11 @@ def parse_arguments(package_path):
     parser.add_argument('--min_freq', type=int, default=5, help='Minimum frequency, default is 5')
     parser.add_argument('--output_dir', help='Output directory, default is the directory of the input_fastq file')
     parser.add_argument('--num_jobs', type=int, default=8, help='Number of jobs, default is -1')
-    parser.add_argument('--merge_bcrs', action='store_true', help="If set, merge BCR sequences")
     parser.add_argument('--TCR', action='store_true', help="If set, assemble TCR sequences")
     parser.add_argument('--mouse', action='store_true', help="If set, use mouse database, otherwise use human")
     parser.add_argument('--bioalign', action='store_true', help="If set, use Biopython pairwise aligner")
-    parser.add_argument('--use_spades', action='store_true', help="If set, use Spades assembler")
+    parser.add_argument('--sensitive', action='store_true', help="If set, use Spades assembler")
+    
     
     parser.add_argument('--blast_dir',
                         default=os.path.dirname(shutil.which("blastn")) if shutil.which("blastn") else "~/Sys_admin/ncbi-blast-2.16.0+-x64-linux/ncbi-blast-2.16.0+/bin",
@@ -183,25 +183,24 @@ def main():
     Contigs_headers = [f'{i}_{header}' for i, header in enumerate(header_c_float)]    
     io.save_to_fasta(headers=Contigs_headers, n_sequences=seqs_contigs, file_path=output_path, include_header=True)
     
-    output_contigs_name = input_unitigs_name.replace('unitigs', 'BCR' if not args.TCR else 'TCR')
-    output_contigs_name_spades = input_unitigs_name.replace('unitigs', 'BCR_contgus' if not args.TCR else 'TCR_contgus')
+    output_contigs_name = input_unitigs_name.replace('unitigs', 'BCR_algo1' if not args.TCR else 'TCR_algo1')
+    output_contigs_name_spades = input_unitigs_name.replace('unitigs', 'BCR_algo2' if not args.TCR else 'TCR_algo2')
     output_bcr_path = os.path.join(scratch_dir, output_contigs_name)
     output_bcr_path_spades = os.path.join(scratch_dir, output_contigs_name_spades)
     
     output_spades_path = None
     seqs_contigs_spades = None
-    if args.use_spades:
-        spades_path = os.path.expanduser(args.spades_path)
+    spades_path = os.path.expanduser(args.spades_path)
 
-        spades_success, spades_error = com.run_spades(spades_path, scratch_dir, input_spades_1, input_spades_2, is_rna=True)
-        
-        if not spades_success:
-            print(f"Error running SPAdes: {spades_error}")
-            print("We continue with the main algorithm!")
-        else:
-            print("SPAdes ran successfully.")
-            output_spades_path = os.path.join(scratch_dir, 'transcripts.fasta')
-            headers_spades, seqs_contigs_spades = io.read_fasta(output_spades_path)
+    spades_success, spades_error = com.run_spades(spades_path, scratch_dir, input_spades_1, input_spades_2, is_rna=True, sensitive=args.sensitive)
+    
+    if not spades_success:
+        print(f"Error running SPAdes: {spades_error}")
+        print("We continue with the main algorithm!")
+    else:
+        print("SPAdes ran successfully.")
+        output_spades_path = os.path.join(scratch_dir, 'transcripts.fasta')
+        headers_spades, seqs_contigs_spades = io.read_fasta(output_spades_path)
     
     if args.bioalign:
         prcess.process_alignment(seqs_hc, header_hc, seqs_contigs, header_c, output_bcr_path, variable=False, num_jobs=args.num_jobs)
@@ -214,15 +213,16 @@ def main():
         blast_output_file = os.path.join(scratch_dir, "blast.out")
         prcess.process_alignment_blast(seqs_contigs, output_bcr_path, output_bcr_path_spades,
                                     blast_output_file, blast_dir, path_imgt_db, scratch_dir,
-                                    output_path, output_spades_path, spades=args.use_spades,
+                                    output_path, output_spades_path, spades=True,
                                     seqs_contigs_spades=seqs_contigs_spades, num_jobs=args.num_jobs)
     
-    
         
-    BCR_file_to_process = output_bcr_path_spades if args.use_spades else output_bcr_path   
+    output_highest_expressed_BCR = input_unitigs_name.replace('unitigs', 'BCR_contiguous' if not args.TCR else 'TCR_contiguous')
+    if spades_success:
+        headers, sequences =  prcess.process_bcr_file(output_bcr_path, io.read_fasta, output_bcr_path_spades)
+    else:
+        headers, sequences =  prcess.process_bcr_file(output_bcr_path, io.read_fasta)
         
-    output_highest_expressed_BCR = input_unitigs_name.replace('unitigs', 'BCR_HE' if not args.TCR else 'TCR_HE')
-    headers, sequences =  prcess.process_bcr_file(BCR_file_to_process)
     io.save_to_fasta(headers=headers, n_sequences=sequences, file_path=output_highest_expressed_BCR, include_header=True, append=False)
     
     current_items = set(os.listdir(scratch_dir))

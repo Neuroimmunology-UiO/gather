@@ -436,7 +436,7 @@ def run_single_cell_assembler_wrapper(
                 spades_path=shutil.which("spades.py"),
                 blast_dir=os.path.dirname(shutil.which("blastn")),
                 use_spades=True,
-                min_freq=1,
+                min_freq=5,
                 num_jobs=num_jobs
             )
 
@@ -445,9 +445,9 @@ def run_single_cell_assembler_wrapper(
 
                 # Process BCR output
                 basename = os.path.basename(subdir)
-                path_to_bcr_contigs = os.path.join(subdir, f"{basename}_R2.BCR_contgus.fa")
-                path_to_bcr = os.path.join(subdir, f"{basename}_R2.BCR.fa")
-                path_to_unitigs = os.path.join(subdir, f"{basename}_R2.unitigs.fa")
+                path_to_bcr_contigs = os.path.join(subdir, f"{basename}_R2.fastq.BCR_contgus.fa")
+                path_to_bcr = os.path.join(subdir, f"{basename}_R2.fastq.BCR.fa")
+                path_to_unitigs = os.path.join(subdir, f"{basename}_R2.fastq.unitigs.fa")
 
                 # Check if neither of the key BCR files exists
                 if not os.path.exists(path_to_bcr_contigs) and not os.path.exists(path_to_bcr):
