@@ -146,13 +146,13 @@ cat {cell_file_name}_R1.fastq.gz {cell_file_name}_R2.fastq.gz > {cell_file_name}
 Then run:
 
 ```bash
-sc_asm.py --seq_merged {cell_file_name}_merged.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz --seq_2 {cell_file_name}_R2.fastq.gz
+sc_asm.py --seq_merged {cell_file_name}_merged.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz --seq_2 {cell_file_name}_R2.fastq.gz --output_dir .
 ```
 
 ### Single-End Data
 
 ```bash
-sc_asm.py --seq_merged {cell_file_name}_R1.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz
+sc_asm.py --seq_merged {cell_file_name}_R1.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz --output_dir .
 ```
 ### Output Files
 
