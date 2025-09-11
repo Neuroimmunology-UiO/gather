@@ -239,7 +239,8 @@ clonality_analysis.py --bcrs_dir <PATH>/BCRs_DIR --chain heavy --output_dir .
 clonality_analysis.py --bcrs_dir <PATH>/BCRs_DIR \
                       --chain heavy \
                       --clonality \
-                      --lineage_tree 
+                      --lineage_tree \
+                      --output_dir .
 ```
 This command will generate:
 
