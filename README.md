@@ -58,8 +58,7 @@ Now, you can immediately run any GATHeR tool using the following Docker command 
 docker run -it \
   -v /path/to/your/scRNAseq_folder:/data \
   --entrypoint bash gather:1.0 \
-  -c "sc_asm.py \
-        --seq_merged /data/<merged_file.fastq> \
+  -c "sc_asm.py \ 
         --seq_1 /data/<read1.fastq> \
         --seq_2 /data/<read2.fastq> \
         --output_dir /data/output \
@@ -140,26 +139,20 @@ GATHeR supports single-cell RNA sequencing data from technologies like Smart-seq
 If your reads are paired-end:
 
 ```bash
-cat {cell_file_name}_R1.fastq.gz {cell_file_name}_R2.fastq.gz > {cell_file_name}_merged.fastq.gz
-```
-
-Then run:
-
-```bash
-sc_asm.py --seq_merged {cell_file_name}_merged.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz --seq_2 {cell_file_name}_R2.fastq.gz --output_dir .
+sc_asm.py --seq_1 {cell_file_name}_R1.fastq.gz --seq_2 {cell_file_name}_R2.fastq.gz --output_dir .
 ```
 
 ### Single-End Data
 
 ```bash
-sc_asm.py --seq_merged {cell_file_name}_R1.fastq.gz --seq_1 {cell_file_name}_R1.fastq.gz --output_dir .
+sc_asm.py --seq_1 {cell_file_name}_R1.fastq.gz --output_dir .
 ```
 ### Output Files
 
 - `{cell_file_name}_merged.unitigs.fa`: Unitigs from the cDBG graph  
 - `{cell_file_name}_merged.contigs.fa`: Assembled contigs (transcriptome, GATHeR algorithm)  
-- `{cell_file_name}_merged.BCR_algo1.fa `: Annotated BCR sequences (GATHeR algorithm)
-- `{cell_file_name}_merged.BCR_algo2.fa `: Annotated BCR sequences (SPAdes algorithm)
+- `{cell_file_name}_merged.BCR_algo1.fa`: Annotated BCR sequences (GATHeR algorithm)
+- `{cell_file_name}_merged.BCR_algo2.fa`: Annotated BCR sequences (SPAdes algorithm)
 - `{cell_file_name}_merged.BCR_contiguous.fa`: Filtered BCR sequences based on the weight and contiguity using the contigs from the both algos.
 
 ### K-mer Size
@@ -219,16 +212,14 @@ outs/filtered_feature_bc_matrix/barcodes.tsv.gz
 
 ## Clonality analysis
 
-After successfully assembling B-cell receptor (BCR) sequences for each cell, the reconstructed heavy and light chains—each saved in separate FASTA files with distinct headers—can be collected across all cells (`Collected_heavy_chains.fasta` and `Collected_light_chains.fasta`) to perform clonality analysis.
-
-Once merged, you can run the `clonality_analysis.py` script to perform V(D)J gene assignment, CDR3 parsing, productivity assessment, and, optionally, clonal grouping and lineage reconstruction.
+After successfully assembling B-cell receptor (BCR) sequences for each cell, the reconstructed heavy and light chains—each saved in separate FASTA files with distinct headers—can be collected across all cells to perform clonality analysis. To do this, copy all `{cell_file_name}_merged.BCR_algo1.fa` and `{cell_file_name}_merged.BCR_algo2.fa` files from all cells to a single directory, say `BCRs_DIR`. Then, you can run the `clonality_analysis.py` script to perform V(D)J gene assignment, CDR3 parsing, productivity assessment, and, optionally, clonal grouping and lineage reconstruction.
 
 ### Step 1: Analyze Light Chains
 
 For light chains, use the following command:
 
 ```bash
-clonality_analysis.py --fasta_file Collected_light_chains.fasta --chain light
+clonality_analysis.py --bcrs_dir <PATH>/BCRs_DIR --chain light --output_dir .
 ```
 
 This will produce:
@@ -237,19 +228,22 @@ This will produce:
 
 ### Step 2: Analyze Heavy Chains with Clonal Inference and Visualization
 
-For heavy chains, you can include additional flags to enable clonal grouping and downstream visualization:
+To get only - `heavy_chains_db-pass.tsv`: a **Change-O–like tab-delimited file** including  **constant region polymorphism analysis**:
 
 ```bash
-clonality_analysis.py --fasta_file Collected_heavy_chains.fasta \
-                      --chain heavy \
-                      --clonal_plot \
-                      --run_combined \
-                      --lineage_tree
+clonality_analysis.py --bcrs_dir <PATH>/BCRs_DIR --chain heavy --output_dir .
 ```
+#### For heavy chains, you can include additional flags to enable clonal grouping and downstream visualization:
 
+```bash
+clonality_analysis.py --bcrs_dir <PATH>/BCRs_DIR \
+                      --chain heavy \
+                      --clonality \
+                      --lineage_tree 
+```
 This command will generate:
 
-- `heavy_chains_db-pass_clone-pass.tsv`: a tab-delimited file with full BCR annotations **plus clonal assignments** and **constant region polymorphism analysis**.
+- `heavy_chains_db-pass_clone-pass.tsv`: a tab-delimited file with full BCR annotations **plus clonal assignments**.
 - A BCR **clonal network plot**, where sequences are visualized as nodes connected by lines if they belong to the same clone (`--clonal_plot`).
 - Phylogenetic **lineage trees** of individual clones reconstructed from inferred germline sequences (`--lineage_tree`).
 
