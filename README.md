@@ -228,7 +228,7 @@ This will produce:
 
 ### Step 2: Analyze Heavy Chains with Clonal Inference and Visualization
 
-To get only - `heavy_chains_db-pass.tsv`: a **Change-O–like tab-delimited file** including  **constant region polymorphism analysis**:
+To get only `heavy_chains_db-pass.tsv`: a **Change-O–like tab-delimited file** including  **constant region polymorphism analysis**:
 
 ```bash
 clonality_analysis.py --bcrs_dir <PATH>/BCRs_DIR --chain heavy --output_dir .
