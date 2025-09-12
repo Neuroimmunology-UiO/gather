@@ -210,16 +210,17 @@ outs/filtered_feature_bc_matrix/barcodes.tsv.gz
 
 **Note**: The `--num_jobs` parameter defaults to 8, but for optimal performance, set it to the maximum number of available CPU cores.
 
-## Clonality analysis
+## Clonality analysis and constant region analysis
 
-After successfully assembling B-cell receptor (BCR) sequences for each cell, the reconstructed heavy and light chains—each saved in separate FASTA files with distinct headers—can be collected across all cells to perform clonality analysis. To do this, copy all `{cell_file_name}_merged.BCR_algo1.fa` and `{cell_file_name}_merged.BCR_algo2.fa` files from all cells to a single directory, say `BCRs_DIR`. Then, you can run the `clonality_analysis.py` script to perform V(D)J gene assignment, CDR3 parsing, productivity assessment, and, optionally, clonal grouping and lineage reconstruction.
+After assembling B-cell receptor (BCR) sequences for each cell, the reconstructed heavy and light chains—saved in separate FASTA files with distinct headers—can be collected across all cells for clonality and constant region analysis.
+To prepare the input, copy all `{cell_file_name}_merged.BCR_algo1.fa` and `{cell_file_name}_merged.BCR_algo2.fa` files from the individual cell directories (if they are not already in a shared location) into a single directory, e.g. `BCRs_DIR`.Then, you can run the `postproc.py` script to perform V(D)J gene assignment, CDR3 parsing, productivity assessment, and, optionally, clonal grouping and lineage reconstruction.
 
 ### Step 1: Analyze Light Chains
 
 For light chains, use the following command:
 
 ```bash
-clonality_analysis.py --bcrs_dir <PATH>/BCRs_DIR --chain light --output_dir .
+postproc.py --bcrs_dir <PATH>/BCRs_DIR --chain light --output_dir .
 ```
 
 This will produce:
@@ -231,12 +232,12 @@ This will produce:
 To get only `heavy_chains_db-pass.tsv`: a **Change-O–like tab-delimited file** including  **constant region polymorphism analysis**:
 
 ```bash
-clonality_analysis.py --bcrs_dir <PATH>/BCRs_DIR --chain heavy --output_dir .
+postproc.py --bcrs_dir <PATH>/BCRs_DIR --chain heavy --output_dir .
 ```
 #### For heavy chains, you can include additional flags to enable clonal grouping and downstream visualization:
 
 ```bash
-clonality_analysis.py --bcrs_dir <PATH>/BCRs_DIR \
+postproc.py --bcrs_dir <PATH>/BCRs_DIR \
                       --chain heavy \
                       --clonality \
                       --lineage_tree \
