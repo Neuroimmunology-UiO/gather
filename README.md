@@ -55,11 +55,12 @@ docker --version
 Now, you can immediately run any GATHeR tool using the following Docker command as an example:
 
 ```bash
-docker run -it \
+docker run --rm -it \
+  -u "$(id -u):$(id -g)" \
   -v /path/to/your/scRNAseq_folder:/data \
   --entrypoint bash \
   gather:1.0 \
-  -c "sc_asm.py \
+  -lc "sc_asm.py \
         --seq_1 /data/<read1.fastq> \
         --seq_2 /data/<read2.fastq> \
         --output_dir /data/output \
