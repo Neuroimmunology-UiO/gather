@@ -12,12 +12,9 @@ This repository provides the environment setup for `gather`, including all neces
 
 ## Table of Contents
 
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Usage](#usage)
+- [Installation](#Installation)
+- [Usage](#Usage)
 - [Processing 10x Genomics Chromium Single-Cell RNA-Seq Data for Assembly](#processing-10x-genomics-chromium-single-cell-rna-seq-data-for-assembly)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Installation
 
@@ -252,5 +249,5 @@ This command will generate:
 
 ## License
 
-Licensed under the Apache License. See the [LICENSE](LICENSE) file for details.
+Licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
