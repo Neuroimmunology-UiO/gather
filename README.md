@@ -251,3 +251,12 @@ This command will generate:
 
 Licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
+## 📖 Citation
+
+If you use this software in your research, please cite the following paper:
+
+> **GATHeR: Graph-based Accurate Tool for immunoglobulin HEavy- and light-chain Reconstruction**  
+> Seyedraoufi, S., Gornitzka, M. B., Lossius, A.  
+> *Journal, 2025*  
+> https://
+
