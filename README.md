@@ -15,7 +15,7 @@ This repository provides the environment setup for `gather`, including all neces
 - [Installation](#Installation)
 - [Usage](#Usage)
 - [Processing 10x Genomics Chromium Single-Cell RNA-Seq Data for Assembly](#processing-10x-genomics-chromium-single-cell-rna-seq-data-for-assembly)
-- [Citation](#📖Citation)
+- [Citation](#-citation)
 
 ## Installation
 
@@ -252,12 +252,12 @@ This command will generate:
 
 Licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## 📖Citation
+## 📖 Citation
 
 If you use this software in your research, please cite the following paper:
 
 > **GATHeR: Graph-based Accurate Tool for immunoglobulin HEavy- and light-chain Reconstruction**  
 > Seyedraoufi, S., Gornitzka, M. B., Lossius, A.  
 > *Journal, 2025*  
-> > [https:/(https://)
+> [https://](https://)
 
