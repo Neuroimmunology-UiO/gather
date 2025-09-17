@@ -15,7 +15,7 @@ This repository provides the environment setup for `gather`, including all neces
 - [Installation](#Installation)
 - [Usage](#Usage)
 - [Processing 10x Genomics Chromium Single-Cell RNA-Seq Data for Assembly](#processing-10x-genomics-chromium-single-cell-rna-seq-data-for-assembly)
-- [Citation](#📖 Citation)
+- [Citation](#📖Citation)
 
 ## Installation
 
