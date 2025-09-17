@@ -153,8 +153,8 @@ sc_asm.py --seq_1 {cell_file_name}_R1.fastq.gz --output_dir .
 
 - `{cell_file_name}_merged.unitigs.fa`: Unitigs from the cDBG graph  
 - `{cell_file_name}_merged.contigs.fa`: Assembled contigs (transcriptome, GATHeR algorithm)  
-- `{cell_file_name}_merged.BCR.fa`: Annotated BCR sequences (SPAdes (algo_1 in the header) and GATHeR algorithms (algo_2 in the header))
-- 
+- `{cell_file_name}_merged.BCR.fa`: Annotated BCR sequences (SPAdes and GATHeR algorithms denoted as algo_1 and algo_2 in the headers)
+  
 ### K-mer Size
 
 - Default: `k = 25`
