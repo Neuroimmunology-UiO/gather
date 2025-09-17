@@ -252,7 +252,7 @@ This command will generate:
 
 Licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## 📖 Citation
+## 📖Citation
 
 If you use this software in your research, please cite the following paper:
 
