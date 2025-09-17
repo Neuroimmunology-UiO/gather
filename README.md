@@ -244,13 +244,13 @@ postproc.py --bcrs_dir <PATH>/BCRs_DIR \
                       --output_dir .
 ```
 This command will generate:
-
-- `heavy_chains_db-pass_clone-pass.tsv`: a tab-delimited file with full BCR annotations **plus clonal assignments**.
-- A BCR **clonal network plot**, where sequences are visualized as nodes connected by lines if they belong to the same clone (`--clonal_plot`).
+- `heavy_chains_db-best.tsv` /  `light_chains_db-best.tsv`: a tab-delimited file with full BCR annotations using only the best assembled sequence for each cell.
+- `heavy_chains.fmt7` / `light_chains.fmt7`: Raw IgBLAST output in format 7 (tabular/structured text).
+- `heavy_chains_db-best_clone-pass.tsv`: a tab-delimited file with full BCR annotations **plus clonal assignments**.
+- A BCR **clonal network plot**, where sequences are visualized as nodes connected by lines if they belong to the same clone (`--clonality`).
 - Phylogenetic **lineage trees** of individual clones reconstructed from inferred germline sequences (`--lineage_tree`).
 
 These outputs follow the standard formats used in the [Change-O](https://changeo.readthedocs.io/) framework and are compatible with downstream tools for repertoire diversity, lineage evolution, and visualization.
-
 
 ## License
 
