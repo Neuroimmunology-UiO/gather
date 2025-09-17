@@ -153,10 +153,8 @@ sc_asm.py --seq_1 {cell_file_name}_R1.fastq.gz --output_dir .
 
 - `{cell_file_name}_merged.unitigs.fa`: Unitigs from the cDBG graph  
 - `{cell_file_name}_merged.contigs.fa`: Assembled contigs (transcriptome, GATHeR algorithm)  
-- `{cell_file_name}_merged.BCR_algo1.fa`: Annotated BCR sequences (GATHeR algorithm)
-- `{cell_file_name}_merged.BCR_algo2.fa`: Annotated BCR sequences (SPAdes algorithm)
-- `{cell_file_name}_merged.BCR_contiguous.fa`: Filtered BCR sequences based on the weight and contiguity using the contigs from the both algos.
-
+- `{cell_file_name}_merged.BCR.fa`: Annotated BCR sequences (SPAdes (algo_1 in the header) and GATHeR algorithms (algo_2 in the header))
+- 
 ### K-mer Size
 
 - Default: `k = 25`
@@ -215,7 +213,7 @@ outs/filtered_feature_bc_matrix/barcodes.tsv.gz
 ## Clonality analysis and constant region analysis
 
 After assembling B-cell receptor (BCR) sequences for each cell, the reconstructed heavy and light chains—saved in separate FASTA files with distinct headers—can be collected across all cells for clonality and constant region analysis.
-To prepare the input, copy all `{cell_file_name}_merged.BCR_algo1.fa` and `{cell_file_name}_merged.BCR_algo2.fa` files from the individual cell directories (if they are not already in a shared location) into a single directory, e.g. `BCRs_DIR`.Then, you can run the `postproc.py` script to perform V(D)J gene assignment, CDR3 parsing, productivity assessment, and, optionally, clonal grouping and lineage reconstruction.
+To prepare the input, copy all `{cell_file_name}_merged.BCR.fa` files from the individual cell directories (if they are not already in a shared location) into a single directory, e.g. `BCRs_DIR`.Then, you can run the `postproc.py` script to perform V(D)J gene assignment, CDR3 parsing, productivity assessment, and, optionally, clonal grouping and lineage reconstruction.
 
 ### Step 1: Analyze Light Chains
 
