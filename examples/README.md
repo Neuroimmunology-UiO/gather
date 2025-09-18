@@ -60,25 +60,12 @@ Expected files:
 
 ---
 
-## 3) Collect Assembled BCRs
-
-```bash
-mkdir -p BCRs
-cp *__merged.BCR.fa BCRs/
-bcr_dir="BCRs"
-
-# Optional: preview a few headers
-grep -m 5 -E "^>" BCRs/* | head -n 10
-```
-
----
-
-## 4) Post-Processing / Constant-Region Analysis
+## 3) Post-Processing / Constant-Region Analysis
 
 ### Light chains
 ```bash
 singularity exec "${SIF:-GATHER.sif}" postproc.py \
-  --bcrs_dir "$bcr_dir" \
+  --bcrs_dir . \
   --chain light \
   --output_dir "output"
 ```
@@ -86,29 +73,29 @@ singularity exec "${SIF:-GATHER.sif}" postproc.py \
 ### Heavy chains
 ```bash
 singularity exec "${SIF:-GATHER.sif}" postproc.py \
-  --bcrs_dir "$bcr_dir" \
+  --bcrs_dir . \
   --chain heavy \
   --output_dir "output"
 ```
 
 ---
 
-## 5) Clonality (Heavy Chain)
+## 4) Clonality (Heavy Chain)
 
 ```bash
 singularity exec "${SIF:-GATHER.sif}" postproc.py \
-  --bcrs_dir "$bcr_dir" \
+  --bcrs_dir . \
   --chain heavy \
   --output_dir "output" \
   --clonality
 ```
 ---
 
-## 6) Lineage Trees (per clone)
+## 5) Lineage Trees (per clone)
 
 ```bash
 singularity exec "${SIF:-GATHER.sif}" postproc.py \
-  --bcrs_dir "$bcr_dir" \
+  --bcrs_dir . \
   --chain heavy \
   --output_dir "output" \
   --clonality \
@@ -116,7 +103,7 @@ singularity exec "${SIF:-GATHER.sif}" postproc.py \
 ```
 ---
 
-## 7) Tips / Troubleshooting
+## 6) Tips / Troubleshooting
 
 ```bash
 # Ensure file pairing exists
