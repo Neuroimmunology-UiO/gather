@@ -42,3 +42,7 @@ do
         --output_dir . \
         --num_jobs 4
 done
+```
+### 2. Collect BCRs and perform 
+
+
