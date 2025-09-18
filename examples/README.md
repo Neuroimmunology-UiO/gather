@@ -80,7 +80,7 @@ grep -m 5 -E "^>" BCRs/* | head -n 10
 singularity exec "${SIF:-GATHER.sif}" postproc.py \
   --bcrs_dir "$bcr_dir" \
   --chain light \
-  --output_dir "output_light"
+  --output_dir "output"
 ```
 
 ### Heavy chains
@@ -88,7 +88,7 @@ singularity exec "${SIF:-GATHER.sif}" postproc.py \
 singularity exec "${SIF:-GATHER.sif}" postproc.py \
   --bcrs_dir "$bcr_dir" \
   --chain heavy \
-  --output_dir "output_heavy"
+  --output_dir "output"
 ```
 
 ---
@@ -99,35 +99,21 @@ singularity exec "${SIF:-GATHER.sif}" postproc.py \
 singularity exec "${SIF:-GATHER.sif}" postproc.py \
   --bcrs_dir "$bcr_dir" \
   --chain heavy \
-  --output_dir "output_heavy_clonality" \
+  --output_dir "output" \
   --clonality
 ```
-
-Expected output (example):
-```text
-output_heavy_clonality/clonal_plot.pdf
-output_heavy_clonality/clone_assignments.tsv
-```
-
 ---
 
-## 6) Lineage Trees (per clone; Heavy Chain)
+## 6) Lineage Trees (per clone)
 
 ```bash
 singularity exec "${SIF:-GATHER.sif}" postproc.py \
   --bcrs_dir "$bcr_dir" \
   --chain heavy \
-  --output_dir "output_heavy_lineage" \
+  --output_dir "output" \
   --clonality \
   --lineage_tree
 ```
-
-Expected outputs (examples):
-```text
-output_heavy_lineage/lineages/clone_*/tree.nwk
-output_heavy_lineage/lineages/clone_*/tree.pdf
-```
-
 ---
 
 ## 7) Tips / Troubleshooting
