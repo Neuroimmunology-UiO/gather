@@ -112,12 +112,7 @@ for r1 in *_R1.fastq.gz; do
 done
 
 # Use absolute path to the image if needed
-SIF="~/Sys_admin/GATHER/GATHER.sif"
+SIF="<PATH>/GATHER.sif"
 
 # Adjust CPU usage during assembly (default shown: 4)
 #   --num_jobs <N>
-
-# Run from anywhere by using absolute paths
-bcr_dir="$(pwd)/BCRs"
-outdir="$(pwd)/output_heavy"
-singularity exec "${SIF}" postproc.py --bcrs_dir "$bcr_dir" --chain heavy --output_dir "$outdir"
