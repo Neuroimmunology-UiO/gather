@@ -20,7 +20,7 @@ In the folder `memory_B_cells/` you will find FASTQ files for **10 single cells*
 To process them, please use our Singularity image.
 
 ### 1. Download the Singularity image
-Download the required container from [this link](#) *(replace with actual download URL)* and save it as `GATHER.sif`.
+Download the required container (`GATHER.sif`) from [Releases section](https://github.com/Neuroimmunology-UiO/gather/releases).
 
 ### 2. Run the assembly loop
 From inside the `memory_B_cells/` folder, run the following command:
