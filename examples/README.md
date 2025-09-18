@@ -1,48 +1,150 @@
-# Single-Cell BCR Analysis Example (Smart-seq Data)
+# Single-Cell BCR Analysis (Smart-seq) — Code-Oriented Guide
 
-This section provides an example workflow using **Smart-seq single-cell RNA-seq data** from:  
-- 6 human plasmablasts  
-- 10 memory B cells  
-
-## Features
-
-By following the provided steps, you can:  
-- Assemble heavy and light chains  
-- Perform constant-region novel allele analysis  
-- Conduct clonality analysis  
-- Construct lineage trees  
+Minimal, code-first walkthrough to assemble BCRs, post-process constant regions, run clonality, and generate lineage trees with **Singularity**.
 
 ---
 
-## Example: Memory B Cells
-
-In the folder `memory_B_cells/` you will find FASTQ files for **10 single cells**.  
-To process them, please use our Singularity image.
-
-### 1. Download the Singularity image
-Download the required container (`GATHER.sif`) from [Releases section](https://github.com/Neuroimmunology-UiO/gather/releases).
-
-### 2. Run the assembly loop
-From inside the `memory_B_cells/` folder, run the following command:
+## 0) Prerequisites
 
 ```bash
-for r1 in *_R1.fastq.gz
-do
-    # Find matching R2 file
-    r2=${r1/_R1.fastq.gz/_R2.fastq.gz}
+# Download container from:
+# https://github.com/Neuroimmunology-UiO/gather/releases
 
-    # Extract sample name (remove suffix)
-    sample=${r1%_R1.fastq.gz}
+# Verify the image is present (either local or absolute path)
+ls -lh GATHER.sif  # or: ls -lh ~/Sys_admin/GATHER/GATHER.sif
+```
 
-    echo "Running assembly for: $sample"
+(Optional) set an absolute path once and reuse:
+```bash
+SIF="GATHER.sif"  # or: SIF="~/Sys_admin/GATHER/GATHER.sif"
+```
 
-    singularity exec GATHER.sif sc_asm.py \
-        --seq_1 "$r1" \
-        --seq_2 "$r2" \
-        --output_dir . \
-        --num_jobs 4
+---
+
+## 1) Data Layout
+
+```bash
+# Work inside the dataset with FASTQs
+cd memory_B_cells/
+
+# Expected naming:
+#   <sample>_R1.fastq.gz
+#   <sample>_R2.fastq.gz
+ls *_R{1,2}.fastq.gz
+```
+
+---
+
+## 2) Assemble BCRs (per cell)
+
+```bash
+# Outputs one FASTA per cell: <sample>__merged.BCR.fa
+for r1 in *_R1.fastq.gz; do
+  r2=${r1/_R1.fastq.gz/_R2.fastq.gz}
+  sample=${r1%_R1.fastq.gz}
+
+  echo "[assemble] ${sample}"
+
+  singularity exec "${SIF:-GATHER.sif}" sc_asm.py \
+    --seq_1 "$r1" \
+    --seq_2 "$r2" \
+    --output_dir . \
+    --num_jobs 4
 done
 ```
-### 2. Collect BCRs and perform 
 
+Expected files:
+```text
+<sample>__merged.BCR.fa
+```
 
+---
+
+## 3) Collect Assembled BCRs
+
+```bash
+mkdir -p BCRs
+cp *__merged.BCR.fa BCRs/
+bcr_dir="BCRs"
+
+# Optional: preview a few headers
+grep -m 5 -E "^>" BCRs/* | head -n 10
+```
+
+---
+
+## 4) Post-Processing / Constant-Region Analysis
+
+### Light chains
+```bash
+singularity exec "${SIF:-GATHER.sif}" postproc.py \
+  --bcrs_dir "$bcr_dir" \
+  --chain light \
+  --output_dir "output_light"
+```
+
+### Heavy chains
+```bash
+singularity exec "${SIF:-GATHER.sif}" postproc.py \
+  --bcrs_dir "$bcr_dir" \
+  --chain heavy \
+  --output_dir "output_heavy"
+```
+
+---
+
+## 5) Clonality (Heavy Chain)
+
+```bash
+singularity exec "${SIF:-GATHER.sif}" postproc.py \
+  --bcrs_dir "$bcr_dir" \
+  --chain heavy \
+  --output_dir "output_heavy_clonality" \
+  --clonality
+```
+
+Expected output (example):
+```text
+output_heavy_clonality/clonal_plot.pdf
+output_heavy_clonality/clone_assignments.tsv
+```
+
+---
+
+## 6) Lineage Trees (per clone; Heavy Chain)
+
+```bash
+singularity exec "${SIF:-GATHER.sif}" postproc.py \
+  --bcrs_dir "$bcr_dir" \
+  --chain heavy \
+  --output_dir "output_heavy_lineage" \
+  --clonality \
+  --lineage_tree
+```
+
+Expected outputs (examples):
+```text
+output_heavy_lineage/lineages/clone_*/tree.nwk
+output_heavy_lineage/lineages/clone_*/tree.pdf
+```
+
+---
+
+## 7) Tips / Troubleshooting
+
+```bash
+# Ensure file pairing exists
+for r1 in *_R1.fastq.gz; do
+  test -f "${r1/_R1.fastq.gz/_R2.fastq.gz}" || echo "Missing R2 for $r1"
+done
+
+# Use absolute path to the image if needed
+SIF="~/Sys_admin/GATHER/GATHER.sif"
+
+# Adjust CPU usage during assembly (default shown: 4)
+#   --num_jobs <N>
+
+# Run from anywhere by using absolute paths
+bcr_dir="$(pwd)/BCRs"
+outdir="$(pwd)/output_heavy"
+singularity exec "${SIF}" postproc.py --bcrs_dir "$bcr_dir" --chain heavy --output_dir "$outdir"
