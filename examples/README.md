@@ -7,7 +7,7 @@ Minimal, code-first walkthrough to assemble BCRs, post-process constant regions,
 Example input files can be downloaded from Figshare at the following link:
 
 
-➡️ [Download example data from Figshare](https://figshare.com/s/0ee0a48b6c038e8a641b)
+➡️ [Download example data from Figshare](https://doi.org/10.6084/m9.figshare.30152848)
 
 ---
 
@@ -21,7 +21,7 @@ Example input files can be downloaded from Figshare at the following link:
 ls -lh GATHER.sif  # or: ls -lh ~/Sys_admin/GATHER/GATHER.sif
 ```
 
-(Optional) set an absolute path once and reuse:
+(Optional) Set an absolute path once and reuse:
 ```bash
 SIF="GATHER.sif"  # or: SIF="~/Sys_admin/GATHER/GATHER.sif"
 ```
