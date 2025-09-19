@@ -62,7 +62,7 @@ done
 
 Expected files:
 ```text
-<sample>__merged.BCR.fa
+<sample>_merged.BCR.fa
 ```
 
 ---
