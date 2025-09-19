@@ -32,7 +32,7 @@ SIF="GATHER.sif"  # or: SIF="~/Sys_admin/GATHER/GATHER.sif"
 
 ```bash
 # Work inside the dataset with FASTQs
-cd memory_B_cells/
+cd Memory_B_cells/
 
 # Expected naming:
 #   <sample>_R1.fastq.gz
