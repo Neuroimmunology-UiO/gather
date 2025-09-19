@@ -2,6 +2,13 @@
 
 Minimal, code-first walkthrough to assemble BCRs, post-process constant regions, run clonality, and generate lineage trees with **Singularity**.
 
+## Example Data
+
+Example input files can be downloaded from Figshare at the following link:
+
+
+➡️ [Download example data from Figshare](https://figshare.com/s/0ee0a48b6c038e8a641b)
+
 ---
 
 ## 0) Prerequisites
