@@ -38,7 +38,7 @@ Once downloaded, you can immediately run any GATHeR tool from within the contain
 ```bash
 singularity exec GATHER.sif sc_asm.py --help
 ```
-
+---
 ### Quick Setup (macOS & Linux, via Docker – Recommended for Mac)
 
 To simplify installation and ensure reproducibility, we also provide a **Docker image**.  
@@ -79,7 +79,7 @@ Once the environment is active, install the `gather` package and its core depend
 conda install -c bioconda gather
 ```
 
----
+
 
 #### Dependencies
 
