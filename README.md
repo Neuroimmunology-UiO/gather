@@ -66,9 +66,7 @@ docker run --rm -it \
 ```
 ### Conda-Based Installation (Alternative to Singularity)
 
-If you prefer a local development environment or wish to integrate GATHeR into an existing Conda workflow, you can install it via Conda using [Bioconda](https://bioconda.github.io/). This method is platform-independent and works well for users running Linux or macOS with Conda installed.
-
-We recommend creating a dedicated environment for GATHeR:
+If you prefer a local development environment or wish to integrate **GATHeR** into an existing Conda workflow, you can install it via Conda. We recommend creating a dedicated environment to avoid dependency conflicts.
 
 ```bash
 conda create --name gather-env python=3.8
@@ -81,54 +79,51 @@ Once the environment is active, install the `gather` package and its core depend
 conda install -c bioconda gather
 ```
 
-### Dependencies
+---
 
-In addition to the Python-based modules installed with Conda, GATHeR relies on several **external tools** and **R packages** that are required for assembly, annotation, and phylogenetic analysis.  
+#### Dependencies
 
-#### External Tools
-- **NCBI BLAST+** — required for sequence similarity searches  
+In addition to the Python modules installed through Conda, **GATHeR** requires several external tools and R packages to support assembly, annotation, and phylogenetic analysis.
+
+##### External Tools
+- **NCBI BLAST+** — sequence similarity searches
 - **SPAdes** — de novo RNA assembly
-- **IgPhyML** — phylogenetic inference of B-cell receptor lineages  
-- **Immcantation helper scripts** — utilities for configuring IgBLAST/IMGT references  
+- **IgPhyML** — phylogenetic inference of B-cell receptor lineages
+- **Immcantation helper scripts** — utilities for configuring IgBLAST/IMGT references
 
-#### R Packages
-- **BiocManager** — package manager for Bioconductor  
-- **treeio**, **ggtree**, **dowser** — Bioconductor packages for lineage tree analysis  
-- **dplyr**, **ggrepel** — CRAN packages for data wrangling and visualization  
+##### R Packages
+- **BiocManager** — package manager for Bioconductor
+- **treeio**, **ggtree**, **dowser** — Bioconductor packages for lineage tree analysis
+- **dplyr**, **ggrepel** — CRAN packages for data wrangling and visualization
 
-To install these dependencies in one step, we provide an automated setup script:  
+To simplify installation, we provide an automated setup script:
 
 📄 [`setup_gather_dependencies.sh`](https://github.com/Neuroimmunology-UiO/gather/blob/main/scripts/setup_dependencies.sh)
 
 ```bash
-# Make the script executable
 chmod +x setup_gather_dependencies.sh
-
-# Run the installer
 ./setup_gather_dependencies.sh
 ```
 
+---
 
-### Prepare IgBLAST and Reference Databases
+#### Prepare IgBLAST and Reference Databases
 
-To assign V(D)J genes and annotate the junctional regions, we rely on [IgBLAST](https://www.ncbi.nlm.nih.gov/igblast/) and reference data from the IMGT database. Setting up the IgBLAST environment requires a few one-time setup steps.
+To assign V(D)J genes and annotate junctional regions, GATHeR relies on [IgBLAST](https://www.ncbi.nlm.nih.gov/igblast/) and reference data from the IMGT database. Setting up the IgBLAST environment requires a few one-time configuration steps.
 
-For convenience, we provide an automated setup script based on the [Change-O IgBLAST setup guide](https://changeo.readthedocs.io/en/stable/examples/igblast.html). The script handles download, extraction, and configuration of the necessary files and tools.
-
-You can download the setup script from our GitHub repository:
+For convenience, we provide a setup script (based on the [Change-O IgBLAST guide](https://changeo.readthedocs.io/en/stable/examples/igblast.html)) that automates downloading, extracting, and configuring IgBLAST and its reference files.
 
 📄 [`setup_igblast_env.sh`](https://github.com/Neuroimmunology-UiO/gather/blob/main/scripts/setup_igblast_env.sh)
-
-After downloading, make the script executable and run it:
 
 ```bash
 chmod +x setup_igblast_env.sh
 ./setup_igblast_env.sh
 ```
 
-> **Note:** You can adjust the IgBLAST version or installation directories inside the script if needed. After running it, restart your shell or run `source ~/.bashrc` to ensure the `IGDATA` environment variable is correctly set.
+> **Note:** You can adjust the IgBLAST version or installation directory inside the script if needed. After installation, restart your shell or run `source ~/.bashrc` to ensure the `IGDATA` environment variable is correctly set.
 
-For more details and troubleshooting, refer to the official [Change-O IgBLAST setup guide](https://changeo.readthedocs.io/en/stable/examples/igblast.html).
+For troubleshooting and further details, see the [Change-O IgBLAST setup guide](https://changeo.readthedocs.io/en/stable/examples/igblast.html).
+
 
 ## Usage
 
