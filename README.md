@@ -2,28 +2,25 @@
 [![Bioconda](https://img.shields.io/badge/bioconda-available-brightgreen)](https://bioconda.github.io/)
 [![Singularity Image](https://img.shields.io/badge/singularity-image-ff69b4)](https://github.com/Neuroimmunology-UiO/gather/releases)
 
+# 🕷️ GATHeR: Graph-based Accurate Tool for Immunoglobulin HEavy- and Light-chain Reconstruction
 
-
-# 🕷️ GATHeR: Graph-based Accurate Tool for immunoglobulin HEavy- and light-chain Reconstruction
-
-This repository provides the environment setup for **GATHeR** `gather`, including all necessary dependencies.
+This repository provides the environment setup for **GATHeR**, including all necessary dependencies.
 
 ## Table of Contents
 
-- [Installation](#Installation)
-- [Usage](#Usage)
-- [Processing 10x Genomics Chromium Single-Cell RNA-Seq Data for Assembly](#processing-10x-genomics-chromium-single-cell-rna-seq-data-for-assembly)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Processing 10x Genomics Chromium 5′ GEX Data for Assembly](#processing-10x-genomics-chromium-5-gex-data-for-assembly)
 - [Citation](#-citation)
 
 ## Installation
 
-### Quick Setup (Linux, via Singularity – Recommended)
+### Quick Setup (Linux, via Singularity — Recommended)
 
 To simplify installation and ensure reproducibility, we provide a prebuilt Singularity image: `GATHER.sif`.
 
-**Before you begin:**  
-Ensure [Singularity](https://docs.sylabs.io/guides/latest/user-guide/) is installed on your system. You can check with:
-
+**Before you begin**  
+Ensure [Singularity](https://docs.sylabs.io/guides/latest/user-guide/) is installed on your system:
 ```bash
 singularity --version
 ```
