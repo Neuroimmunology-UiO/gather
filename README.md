@@ -117,6 +117,7 @@ chmod +x setup_igblast_env.sh
 For troubleshooting and further details, see the [Change-O IgBLAST setup guide](https://changeo.readthedocs.io/en/stable/examples/igblast.html).
 
 ---
+
 ## Usage
 
 GATHeR supports single-cell RNA sequencing data from technologies like Smart-seq2/3 and 10x Genomics Chromium.
