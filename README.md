@@ -125,7 +125,7 @@ For troubleshooting and further details, see the [Change-O IgBLAST setup guide](
 
 GATHeR supports single-cell RNA sequencing data from technologies like Smart-seq2/3 and 10x Genomics Chromium.
 
-### Merging Paired-End Reads
+### Paired-End Reads
 
 If your reads are paired-end:
 
@@ -133,16 +133,16 @@ If your reads are paired-end:
 sc_asm.py --seq_1 {cell_file_name}_R1.fastq.gz --seq_2 {cell_file_name}_R2.fastq.gz --output_dir .
 ```
 
-### Single-End Data
+### Single-End Reads
 
 ```bash
 sc_asm.py --seq_1 {cell_file_name}_R1.fastq.gz --output_dir .
 ```
 ### Output Files
 
-- `{cell_file_name}_merged.unitigs.fa`: Unitigs from the cDBG graph  
+- `{cell_file_name}_merged.unitigs.fa`: Unitigs from the cDBG (de Bruijn) graph
 - `{cell_file_name}_merged.contigs.fa`: Assembled contigs (transcriptome, GATHeR algorithm)  
-- `{cell_file_name}_merged.BCR.fa`: Annotated BCR sequences (SPAdes and GATHeR algorithms denoted as algo_1 and algo_2 in the headers)
+- `{cell_file_name}_merged.BCR.fa`: Annotated BCR sequences; headers indicate the algorithm (algo_1=SPAdes, algo_2=GATHeR)
   
 ### K-mer Size
 
