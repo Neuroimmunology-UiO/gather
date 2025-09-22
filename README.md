@@ -50,6 +50,10 @@ docker --version
 Pull the Docker image and run:
 
 ```bash
+docker pull seyedmos/gather:1.0
+```
+
+```bash
 docker run --rm -it \
 -u "$(id -u):$(id -g)" \
 -v /path/to/your/scRNAseq_folder:/data \
