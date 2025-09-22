@@ -27,7 +27,7 @@ setup(
     ],
     entry_points={
     "console_scripts": [
-        "10x-asm=gather.10x_asm:main",
+        "10x-asm=gather.tenx_asm:main",
         "sc-asm=gather.sc_asm:main",
         "postproc=gather.postproc:main",
     ],
