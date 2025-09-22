@@ -1,4 +1,0 @@
-[console_scripts]
-10x-asm = gather.10x_asm:main
-gassembler_1 = gather.gassembler_1:main
-sc-asm = gather.sc_asm:main

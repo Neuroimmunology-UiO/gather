@@ -1,9 +1,0 @@
-numpy>=1.19
-pandas
-networkx
-joblib
-tqdm
-biopython
-argcomplete
-glob2
-rich
