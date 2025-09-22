@@ -1,6 +1,8 @@
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Bioconda](https://img.shields.io/badge/bioconda-available-brightgreen)](https://bioconda.github.io/)
 [![Singularity Image](https://img.shields.io/badge/singularity-image-ff69b4)](https://github.com/Neuroimmunology-UiO/gather/releases)
+![GitHub all releases](https://img.shields.io/github/downloads/OWNER/REPO/total?color=blue&label=Downloads)
+
 
 # 🕷️ GATHeR: Graph-based Accurate Tool for Immunoglobulin HEavy- and Light-chain Reconstruction
 
