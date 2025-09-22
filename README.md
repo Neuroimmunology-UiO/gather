@@ -44,20 +44,19 @@ Ensure [Docker Desktop](https://www.docker.com/products/docker-desktop/) is inst
 ```bash
 docker --version
 ```
-
-Now, you can immediately run any GATHeR tool using the following Docker command as an example:
+Pull the Docker image and run:
 
 ```bash
 docker run --rm -it \
-  -u "$(id -u):$(id -g)" \
-  -v /path/to/your/scRNAseq_folder:/data \
-  --entrypoint bash \
-  gather:1.0 \
-  -lc "sc_asm.py \
-        --seq_1 /data/<read1.fastq> \
-        --seq_2 /data/<read2.fastq> \
-        --output_dir /data/output \
-        --num_jobs 4"
+-u "$(id -u):$(id -g)" \
+-v /path/to/your/scRNAseq_folder:/data \
+--entrypoint bash \
+seyedmos/gather:1.0 \
+-lc "sc_asm.py \
+--seq_1 /data/<read1.fastq> \
+--seq_2 /data/<read2.fastq> \
+--output_dir /data/output \
+--num_jobs 4"
 ```
 ---
 
