@@ -8,7 +8,7 @@ Created on Thu Feb 20 11:23:14 2025
 
 from rich.console import Console
 from gather import __version__, __author__, __description__, __url__
-from utils import DBG, ProcessSeq, CommandExecutor, IO
+from gather.utils import DBG, ProcessSeq, CommandExecutor, IO
 import numpy as np
 import networkx as nx
 from tqdm import tqdm

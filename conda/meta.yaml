@@ -7,11 +7,15 @@ package:
 
 source:
   url: https://github.com/Neuroimmunology-UiO/gather/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: <PUT_SHA256_HERE>
+  sha256: d0e7319be4cb55b686a810b9bec9235051cc80c9d9ef5a9c04948ac278d1c15f
 
 build:
   noarch: python
+  number: 0
   script: python -m pip install --no-deps --no-build-isolation .
+  run_exports:
+    - {{ pin_subpackage('gather', max_pin='x.x') }}
+
 
 requirements:
   host:

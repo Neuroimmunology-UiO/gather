@@ -13,7 +13,7 @@ import sys
 import gzip
 from itertools import product, combinations
 from tqdm import tqdm
-from utils import CommandExecutor, IO
+from gather.utils import CommandExecutor, IO
 import glob
 import shutil
 from concurrent.futures import ProcessPoolExecutor, as_completed

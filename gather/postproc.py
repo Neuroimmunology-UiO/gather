@@ -14,7 +14,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib import rc, rcParams
 import numpy as np
-from utils import Aligner, IO, ProcessSeq
+from gather.utils import Aligner, IO, ProcessSeq
 import shutil
 from pathlib import Path
 
