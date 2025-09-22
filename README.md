@@ -82,7 +82,7 @@ Once the environment is active, install the `gather` package and its core depend
 conda install -c bioconda gather
 ```
 
-#### Dependencies
+#### Dependencies (only for Conda-based installation)
 In addition to the Python modules installed through Conda, **GATHeR** requires several external tools and R packages to support assembly, annotation, and phylogenetic analysis.
 
 ##### External Tools
