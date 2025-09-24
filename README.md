@@ -242,5 +242,4 @@ If you use this software in your research, please cite:
 > **GATHeR: Graph-based Accurate Tool for immunoglobulin HEavy- and light-chain Reconstruction**  
 > Seyedraoufi, S., Gornitzka, M. B., Lossius, A.  
 > *bioRxiv, 2025*  
-> [https://]([https://](https://doi.org/10.1101/2025.09.21.677530))
-
+> [https://doi.org/10.1101/2025.09.21.677530](https://doi.org/10.1101/2025.09.21.677530)
