@@ -72,16 +72,9 @@ seyedmos/gather:1.0 \
 If you prefer a local development environment or wish to integrate **GATHeR** into an existing Conda workflow, you can install it via Conda. We recommend creating a dedicated environment to avoid dependency conflicts:
 
 ```bash
-conda create --name gather-env python=3.8
+conda create -n gather-env -c bioconda gather
 conda activate gather-env
 ```
-
-Once the environment is active, install the `gather` package and its core dependencies from Bioconda and Conda-Forge:
-
-```bash
-conda install -c bioconda gather
-```
-
 #### Dependencies (only for Conda-based installation)
 In addition to the Python modules installed through Conda, **GATHeR** requires several external tools and R packages to support assembly, annotation, and phylogenetic analysis.
 
