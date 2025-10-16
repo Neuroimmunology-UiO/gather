@@ -22,16 +22,14 @@ GATHeR assembles BCR heavy and light chains from single-cell RNA-seq using de Br
 
 To simplify installation and ensure reproducibility, we provide a prebuilt Singularity image: `GATHER.sif`, which has been tested on Ubuntu 24.04.1.
 
-**Before you begin**  
-Ensure [Singularity](https://docs.sylabs.io/guides/latest/user-guide/) is installed on your system:
+Before you begin ensure [Singularity](https://docs.sylabs.io/guides/latest/user-guide/) is installed on your system:
+
 ```bash
 singularity --version
 ```
 #### Download the Image
 
-The `GATHER.sif` image is available for direct download from the [Releases section](https://github.com/Neuroimmunology-UiO/gather/releases) of our GitHub repository.
-
-Once downloaded, you can immediately run any GATHeR tool from within the container. For example:
+The `GATHER.sif` image is available for direct download from the [Releases section](https://github.com/Neuroimmunology-UiO/gather/releases) of our GitHub repository. Once downloaded, you can immediately run any GATHeR tool from within the container. For example:
 
 ```bash
 singularity exec GATHER.sif sc_asm.py --help
