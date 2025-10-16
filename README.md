@@ -5,7 +5,7 @@
 
 
 
-# 🕷️ GATHeR: Graph-based Accurate Tool for Immunoglobulin HEavy- and Light-chain Reconstruction
+# <span style="font-size:2em;">🕷️</span> GATHeR: Graph-based Accurate Tool for Immunoglobulin HEavy- and Light-chain Reconstruction
 
 GATHeR assembles BCR heavy and light chains from single-cell RNA-seq using de Bruijn graphs. It reconstructs paired BCR sequences and extends them into constant regions for accurate isoform, subclass, and allele assignment. Supports Smart-seq2/3 and 10x Genomics data.
 
