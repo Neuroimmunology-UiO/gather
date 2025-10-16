@@ -75,6 +75,7 @@ If you prefer a local setup or want to integrate GATHeR into an existing Conda w
 conda create -n gather-env -c bioconda gather
 conda activate gather-env
 ```
+> ⚠️ **Note:** *For Conda-based installation, you must also install the external dependencies listed below. Please follow the instructions under the **Dependencies (only for Conda-based installation)** section.*
 #### Dependencies (only for Conda-based installation)
 In addition to the Python modules installed through Conda, **GATHeR** requires the following external tools and R packages to support assembly, annotation, and phylogenetic analysis.
 
