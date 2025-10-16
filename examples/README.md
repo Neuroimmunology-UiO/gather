@@ -1,6 +1,6 @@
 # Single-Cell BCR Analysis (Smart-seq) — Code-Oriented Guide
 
-Minimal, code-first walkthrough to assemble BCRs, post-process constant regions, run clonality, and generate lineage trees with **Singularity**.
+Minimal, code-first walkthrough to assemble BCRs, post-process constant regions, run clonality, and generate lineage trees with **Singularity**. Tested on Ubuntu 24.04.1 with an Intel Core i5-1345U (13th Gen, 12 cores) and 16 GB RAM, using 4 cores. The full pipeline took approximately 60 minutes for the *Plasmablasts* dataset and 20 minutes for *Memory_B_cells*.
 
 ## Example Data
 
