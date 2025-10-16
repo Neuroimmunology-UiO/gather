@@ -39,7 +39,7 @@ singularity exec GATHER.sif sc_asm.py --help
 ---
 ### Quick Setup (macOS & Linux, via Docker – Recommended for Mac)
 
-To simplify installation and ensure reproducibility, we also provide a **Docker image**.  
+We also provide a **Docker image**, which has been tested on MAC OS XX and Ubuntu 24.04.1 LTS.  
 
 **Before you begin:**  
 Ensure [Docker Desktop](https://www.docker.com/products/docker-desktop/) is installed on your system:
