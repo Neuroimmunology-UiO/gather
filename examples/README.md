@@ -32,7 +32,7 @@ SIF="<PATH>/GATHER.sif"  # Use absolute path
 
 ```bash
 # Work inside the dataset with FASTQs
-cd Memory_B_cells/
+cd Plasmablasts/
 
 # Expected naming:
 #   <sample>_R1.fastq.gz
