@@ -27,7 +27,7 @@ Ensure [Singularity](https://docs.sylabs.io/guides/latest/user-guide/) is instal
 ```bash
 singularity --version
 ```
-### Download the Image
+#### Download the Image
 
 The `GATHER.sif` image is available for direct download from the [Releases section](https://github.com/Neuroimmunology-UiO/gather/releases) of our GitHub repository.
 
@@ -37,7 +37,7 @@ Once downloaded, you can immediately run any GATHeR tool from within the contain
 singularity exec GATHER.sif sc_asm.py --help
 ```
 ---
-### Quick Setup (macOS & Linux, via Docker – Recommended for Mac)
+#### Quick Setup (macOS & Linux, via Docker – Recommended for Mac)
 
 We also provide a Docker image, which has been tested on MAC OS XX and Ubuntu 24.04.1.  
 
@@ -67,7 +67,7 @@ seyedmos/gather:1.0 \
 ```
 ---
 
-### Conda-based Installation (Alternative to Singularity)
+#### Conda-based Installation (Alternative to Singularity)
 
 If you prefer a local setup or want to integrate GATHeR into an existing Conda workflow, you can install it via Conda. Installation (tested on Ubuntu 24.04.1 with an Intel Core i5-1345U, 12 cores, and 16 GB RAM) took about 30 minutes. We recommend creating a dedicated environment to avoid dependency conflicts:
 
@@ -120,22 +120,22 @@ For troubleshooting and further details, see the [Change-O IgBLAST setup guide](
 
 GATHeR supports single-cell RNA sequencing data from technologies like Smart-seq2/3 and 10x Genomics Chromium.
 
-### Paired-End Reads
+#### Paired-End Reads
 ```bash
 sc_asm.py --seq_1 {cell_file_name}_R1.fastq.gz --seq_2 {cell_file_name}_R2.fastq.gz --output_dir .
 ```
 
-### Single-End Reads
+#### Single-End Reads
 ```bash
 sc_asm.py --seq_1 {cell_file_name}_R1.fastq.gz --output_dir .
 ```
 
-### Output Files
+#### Output Files
 - `{cell_file_name}_merged.unitigs.fa`: Unitigs from the cDBG (de Bruijn) graph
 - `{cell_file_name}_merged.contigs.fa`: Assembled contigs (transcriptome, GATHeR algorithm)  
 - `{cell_file_name}_merged.BCR.fa`: Annotated BCR sequences; headers indicate the algorithm (algo_1=SPAdes, algo_2=GATHeR)
   
-### K-mer Size
+#### K-mer Size
 - Default: `k = 25`
 - Rule of thumb: `k < read length - 20`
 - For short reads (e.g., 30 bp), the feasible k-mer size range is constrained; values between 21 and 25 are generally appropriate, with 27 being a possible upper limit depending on the context.
@@ -158,7 +158,7 @@ The list of detected cell barcodes is typically located in:
 outs/filtered_feature_bc_matrix/barcodes.tsv.gz
 ```
 
-### Prepare the Data for Assembly
+#### Prepare the Data for Assembly
 
 1. Concatenate all R1 reads:
     ```bash
@@ -190,7 +190,7 @@ outs/filtered_feature_bc_matrix/barcodes.tsv.gz
 After assembling B-cell receptor (BCR) sequences for each cell, the reconstructed heavy and light chains—saved in separate FASTA files with distinct headers—can be collected across all cells for clonality and constant region analysis.
 To prepare the input, copy all `{cell_file_name}_merged.BCR.fa` files from the individual cell directories (if they are not already in a shared location) into a single directory, e.g. `BCRs_DIR`.Then, you can run the `postproc.py` script to perform V(D)J gene assignment, CDR3 parsing, productivity assessment, and, optionally, clonal grouping and lineage reconstruction.
 
-### Step 1: Analyze Light Chains
+#### Step 1: Analyze Light Chains
 For light chains, use the following command:
 
 ```bash
@@ -200,7 +200,7 @@ postproc.py --bcrs_dir <PATH>/BCRs_DIR --chain light --output_dir .
 This will produce:
 - `light_chains_db-pass.tsv`: a **Change-O–like tab-delimited file** containing detailed annotations of the light chain sequences, including gene calls, junction regions, productivity, and alignment features.
 
-### Step 2: Analyze Heavy Chains (Optional Clonal Inference and Visualization)
+#### Step 2: Analyze Heavy Chains (Optional Clonal Inference and Visualization)
 
 To get only `heavy_chains_db-pass.tsv`: a **Change-O–like tab-delimited file** including  **constant region polymorphism analysis**:
 ```bash
