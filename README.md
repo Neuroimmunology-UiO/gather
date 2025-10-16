@@ -76,7 +76,7 @@ conda create -n gather-env -c bioconda gather
 conda activate gather-env
 ```
 #### Dependencies (only for Conda-based installation)
-In addition to the Python modules installed through Conda, **GATHeR** requires several external tools and R packages to support assembly, annotation, and phylogenetic analysis.
+In addition to the Python modules installed through Conda, **GATHeR** requires the following external tools and R packages to support assembly, annotation, and phylogenetic analysis.
 
 ##### External Tools
 - **NCBI BLAST+** — sequence similarity searches
