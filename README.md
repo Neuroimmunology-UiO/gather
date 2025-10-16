@@ -65,9 +65,6 @@ seyedmos/gather:1.0 \
 
 #### Conda-based Installation (Alternative to Singularity)
 If you prefer a local setup or want to integrate GATHeR into an existing Conda workflow, you can install it via Conda. Installation (tested on Ubuntu 24.04.1 with an Intel Core i5-1345U, 12 cores, and 16 GB RAM) took about 30 minutes.
-> [!NOTE]
-> For Conda-based installation, you must also install the external dependencies listed below. 
-
 We recommend creating a dedicated environment to avoid dependency conflicts:
 ```bash
 conda create -n gather-env -c bioconda gather
@@ -182,7 +179,8 @@ outs/filtered_feature_bc_matrix/barcodes.tsv.gz
                --output_dir_name cells
     ```
 
-**Note**: The `--num_jobs` parameter defaults to 8, but for optimal performance, set it to the maximum number of available CPU cores.
+> [!NOTE]
+> The `--num_jobs` parameter defaults to 8, but for optimal performance, set it to the maximum number of available CPU cores.
 
 ## Clonality Analysis and Constant-Region Analysis
 
