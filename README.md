@@ -20,7 +20,7 @@ GATHeR assembles BCR heavy and light chains from single-cell RNA-seq using de Br
 
 To simplify installation and ensure reproducibility, we provide a prebuilt Singularity image: `GATHER.sif`, which has been tested on Ubuntu 24.04.1.
 
-Before you begin ensure [Singularity](https://docs.sylabs.io/guides/latest/user-guide/) is installed on your system:
+Before you begin, ensure [Singularity](https://docs.sylabs.io/guides/latest/user-guide/) is installed on your system:
 
 ```bash
 singularity --version
@@ -37,8 +37,7 @@ singularity exec GATHER.sif sc_asm.py --help
 
 We also provide a Docker image, which has been tested on MAC OS XX and Ubuntu 24.04.1.  
 
-**Before you begin:**  
-Ensure [Docker Desktop](https://www.docker.com/products/docker-desktop/) is installed on your system:
+Before you begin, ensure [Docker Desktop](https://www.docker.com/products/docker-desktop/) is installed on your system:
 
 ```bash
 docker --version
