@@ -3,7 +3,7 @@
 [![Singularity Image](https://img.shields.io/badge/singularity-image-ff69b4)](https://github.com/Neuroimmunology-UiO/gather/releases)
 
 
-# <span style="font-size:2em;">🕷️</span> GATHeR: Graph-based Accurate Tool for Immunoglobulin HEavy- and Light-chain Reconstruction
+# 🕷️ GATHeR: Graph-based Accurate Tool for Immunoglobulin HEavy- and Light-chain Reconstruction
 
 GATHeR assembles BCR heavy and light chains from single-cell RNA-seq using de Bruijn graphs. It reconstructs paired BCR sequences and extends them into constant regions for accurate isoform, subclass, and allele assignment. Supports Smart-seq2/3 and 10x Genomics data.
 
@@ -32,7 +32,7 @@ The `GATHER.sif` image is available for direct download from the [Releases secti
 ```bash
 singularity exec GATHER.sif sc_asm.py --help
 ```
----
+<hr style="border: 2px dashed #4682B4;">
 #### Quick Setup (macOS & Linux, via Docker – Recommended for Mac)
 
 We also provide a Docker image, which has been tested on MAC OS XX and Ubuntu 24.04.1.  
