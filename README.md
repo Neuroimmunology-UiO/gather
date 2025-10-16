@@ -70,7 +70,7 @@ seyedmos/gather:1.0 \
 #### Conda-based Installation (Alternative to Singularity)
 If you prefer a local setup or want to integrate GATHeR into an existing Conda workflow, you can install it via Conda. Installation (tested on Ubuntu 24.04.1 with an Intel Core i5-1345U, 12 cores, and 16 GB RAM) took about 30 minutes.
 > [!NOTE]
-> For Conda-based installation, you must also install the external dependencies listed below. Please follow the steps in the **Dependencies (only for Conda-based installation)** section before running GATHeR.
+> For Conda-based installation, you must also install the external dependencies listed below. 
 
 We recommend creating a dedicated environment to avoid dependency conflicts:
 ```bash
@@ -112,7 +112,8 @@ chmod +x setup_igblast_env.sh
 ./setup_igblast_env.sh
 ```
 
-> **Note:** You can adjust the IgBLAST version or installation directory inside the script if needed. After installation, restart your shell or run `source ~/.bashrc` to ensure the `IGDATA` environment variable is correctly set.
+> [!NOTE]
+> You can adjust the IgBLAST version or installation directory inside the script if needed. After installation, restart your shell or run `source ~/.bashrc` to ensure the `IGDATA` environment variable is correctly set.
 
 For troubleshooting and further details, see the [Change-O IgBLAST setup guide](https://changeo.readthedocs.io/en/stable/examples/igblast.html).
 
