@@ -56,7 +56,8 @@ for r1 in *_R1.fastq.gz; do
     --seq_1 "$r1" \
     --seq_2 "$r2" \
     --output_dir . \
-    --num_jobs 4
+    --num_jobs 4 \
+    --min_freq 10   # use 5 for Memory_B_cells
 done
 ```
 
