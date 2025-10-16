@@ -20,7 +20,7 @@ This repository provides the environment setup for **GATHeR**, including all nec
 
 ### Quick Setup (Linux, via Singularity — Recommended)
 
-To simplify installation and ensure reproducibility, we provide a prebuilt Singularity image: `GATHER.sif`.
+To simplify installation and ensure reproducibility, we provide a prebuilt Singularity image: `GATHER.sif`, which has been tested on Ubuntu 24.04.1.
 
 **Before you begin**  
 Ensure [Singularity](https://docs.sylabs.io/guides/latest/user-guide/) is installed on your system:
