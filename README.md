@@ -18,7 +18,7 @@ GATHeR assembles BCR heavy and light chains from single-cell RNA-seq using de Br
 
 ## Installation
 
-### Quick Setup (Linux, via Singularity — Recommended)
+#### Quick Setup (Linux, via Singularity — Recommended)
 
 To simplify installation and ensure reproducibility, we provide a prebuilt Singularity image: `GATHER.sif`, which has been tested on Ubuntu 24.04.1.
 
