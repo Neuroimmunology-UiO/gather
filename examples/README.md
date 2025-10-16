@@ -23,7 +23,7 @@ ls -lh GATHER.sif  # or: ls -lh ~/Sys_admin/GATHER/GATHER.sif
 
 (Optional) Set an absolute path once and reuse:
 ```bash
-SIF="GATHER.sif"  # or: SIF="~/Sys_admin/GATHER/GATHER.sif"
+SIF="<PATH>/GATHER.sif"  # Use absolute path
 ```
 
 ---
