@@ -69,7 +69,7 @@ seyedmos/gather:1.0 \
 
 ### Conda-based Installation (Alternative to Singularity)
 
-If you prefer a local development environment or wish to integrate **GATHeR** into an existing Conda workflow, you can install it via Conda. We recommend creating a dedicated environment to avoid dependency conflicts:
+If you prefer a local development environment or wish to integrate **GATHeR** into an existing Conda workflow, you can install it via Conda (Tested on Ubuntu 24.04.1). We recommend creating a dedicated environment to avoid dependency conflicts:
 
 ```bash
 conda create -n gather-env -c bioconda gather
