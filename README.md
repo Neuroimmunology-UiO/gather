@@ -68,10 +68,11 @@ seyedmos/gather:1.0 \
 ---
 
 #### Conda-based Installation (Alternative to Singularity)
+If you prefer a local setup or want to integrate GATHeR into an existing Conda workflow, you can install it via Conda. Installation (tested on Ubuntu 24.04.1 with an Intel Core i5-1345U, 12 cores, and 16 GB RAM) took about 30 minutes.
 > [!NOTE]
 > For Conda-based installation, you must also install the external dependencies listed below. Please follow the steps in the **Dependencies (only for Conda-based installation)** section before running GATHeR.
-If you prefer a local setup or want to integrate GATHeR into an existing Conda workflow, you can install it via Conda. Installation (tested on Ubuntu 24.04.1 with an Intel Core i5-1345U, 12 cores, and 16 GB RAM) took about 30 minutes. We recommend creating a dedicated environment to avoid dependency conflicts:
 
+We recommend creating a dedicated environment to avoid dependency conflicts:
 ```bash
 conda create -n gather-env -c bioconda gather
 conda activate gather-env
