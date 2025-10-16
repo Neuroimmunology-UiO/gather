@@ -79,15 +79,14 @@ conda activate gather-env
 In addition to the Python modules installed through Conda, **GATHeR** requires the following external tools and R packages to support assembly, annotation, and phylogenetic analysis.
 
 ##### External Tools
-- **NCBI BLAST+** — sequence similarity searches
-- **SPAdes** — de novo RNA assembly
+- **NCBI BLAST+ v2.16.0** — sequence similarity searches
+- **SPAdes v4.2.0** — de novo RNA assembly
 - **IgPhyML** — phylogenetic inference of B-cell receptor lineages
-- **Immcantation helper scripts** — utilities for configuring IgBLAST/IMGT references
-
+- 
 ##### R Packages
-- **BiocManager** — package manager for Bioconductor
-- **treeio**, **ggtree**, **dowser** — Bioconductor packages for lineage tree analysis
-- **dplyr**, **ggrepel** — CRAN packages for data wrangling and visualization
+- **BiocManager v1.30.25** — package manager for Bioconductor
+- **treeio v1.26.0**, **ggtree v3.14.0**, **dowser v1.10.0** — Bioconductor packages for lineage tree analysis
+- **dplyr v1.1.4**, **ggrepel v0.9.5** — CRAN packages for data wrangling and visualization
 
 To simplify installation, we provide an automated setup script:
 
