@@ -82,7 +82,7 @@ In addition to the Python modules installed through Conda, **GATHeR** requires t
 - **NCBI BLAST+ v2.16.0** — sequence similarity searches
 - **SPAdes v4.2.0** — de novo RNA assembly
 - **IgPhyML** — phylogenetic inference of B-cell receptor lineages
-- 
+  
 ##### R Packages
 - **BiocManager v1.30.25** — package manager for Bioconductor
 - **treeio v1.26.0**, **ggtree v3.14.0**, **dowser v1.10.0** — Bioconductor packages for lineage tree analysis
