@@ -173,10 +173,10 @@ outs/filtered_feature_bc_matrix/barcodes.tsv.gz
 
 4. Run the assembly script:
     ```bash
-    10x_asm.py --barcode_file barcodes.tsv \
-               --r1_fastq Merged_R1.fastq.gz \
-               --r2_fastq Merged_R2.fastq.gz \
-               --output_dir_name cells
+    tenx_asm.py --barcode_file barcodes.tsv \
+                --r1_fastq Merged_R1.fastq.gz \
+                --r2_fastq Merged_R2.fastq.gz \
+                --output_dir_name cells
     ```
 
 > [!NOTE]
