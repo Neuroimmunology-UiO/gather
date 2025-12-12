@@ -7,20 +7,21 @@ package:
 
 source:
   url: https://github.com/Neuroimmunology-UiO/gather/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: d0e7319be4cb55b686a810b9bec9235051cc80c9d9ef5a9c04948ac278d1c15f
+  sha256: a8f4bce637888e8b3d970213b7166aa36b329de7eb347c4b3d0d06ab73eab075
 
 build:
   noarch: python
   number: 0
-  script: python -m pip install --no-deps --no-build-isolation .
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation
   run_exports:
-    - {{ pin_subpackage('gather', max_pin='x.x') }}
-
+    - {{ pin_subpackage(name, max_pin='x.x') }}
 
 requirements:
   host:
     - python >=3.9
     - pip
+    - setuptools
+    - wheel
   run:
     - python >=3.9
     - numpy >=1.19
@@ -32,13 +33,13 @@ requirements:
     - rich
     - matplotlib-base
     - bcalm >=2.2.3
-    - argcomplete 
+    - argcomplete
 
 test:
   imports:
     - gather
   commands:
-    - 10x-asm --help
+    - tenx-asm --help
     - sc-asm --help
     - postproc --help
   requires:
@@ -55,5 +56,4 @@ about:
 
 extra:
   recipe-maintainers:
-    - <your_github_username>
-
+    - codeseyed
