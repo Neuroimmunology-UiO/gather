@@ -74,7 +74,7 @@ def parse_arguments(package_path):
     return args
 
 def main():
-    package_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    package_path = os.path.dirname(os.path.abspath(__file__))
     args = parse_arguments(package_path)
     display_custom_banner()
     
