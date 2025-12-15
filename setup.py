@@ -4,14 +4,24 @@ from pathlib import Path
 about = {}
 here = Path(__file__).parent
 
-with open(here / "gather" / "__init__.py") as f:
+with open(here / "gather" / "__init__.py", encoding="utf-8") as f:
     exec(f.read(), about)
+
+# Collect all files under gather/database (recursively)
+db_dir = here / "gather" / "database"
+db_files = []
+if db_dir.exists():
+    db_files = [
+        str(p.relative_to(here / "gather"))
+        for p in db_dir.rglob("*")
+        if p.is_file()
+    ]
 
 setup(
     name="gather",
     version=about["__version__"],
     description=about["__description__"],
-    long_description=(here / "README.md").read_text(),
+    long_description=(here / "README.md").read_text(encoding="utf-8"),
     long_description_content_type="text/markdown",
     author=about["__author__"],
     author_email="seyedmos@uio.no",
@@ -36,11 +46,7 @@ setup(
         ],
     },
     include_package_data=True,
-    package_data={
-        "gather": [
-            "database/**/*",
-        ]
-    },
+    package_data={"gather": db_files},
     zip_safe=False,
     classifiers=[
         "Programming Language :: Python :: 3",
