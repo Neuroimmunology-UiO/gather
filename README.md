@@ -133,9 +133,8 @@ sc_asm.py --seq_1 {cell_file_name}_R1.fastq.gz --output_dir .
 - `{cell_file_name}_merged.BCR.fa`: Annotated BCR sequences; headers indicate the algorithm (algo_1=SPAdes, algo_2=GATHeR)
   
 #### K-mer Size
-- Default: `k = 25`
-- Rule of thumb: `k < read length - 20`
-- For short reads (e.g., 30 bp), the feasible k-mer size range is constrained; values between 21 and 25 are generally appropriate, with 27 being a possible upper limit depending on the context.
+- Default: k = 25
+- Guidance: For typical scRNA-seq read lengths (≥ 75 bp), performance is generally stable for k in the range 25–31. Smaller k can increase spurious graph connections, whereas very large k may increase fragmentation under uneven/low coverage. For unusually short reads, the feasible k range is more constrained and may require smaller values.
 
 ## Processing 10x Genomics Chromium 5' GEX Data for Assembly
 
