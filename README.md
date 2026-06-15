@@ -227,7 +227,7 @@ Licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 If you use this software in your research, please cite:
 
-> **GATHeR: Graph-based Accurate Tool for immunoglobulin HEavy- and light-chain Reconstruction**  
+> **GATHeR: graph-based accurate tool for immunoglobulin heavy- and light-chain reconstruction.**  
 > Seyedraoufi, S., Gornitzka, M. B., Lossius, A.  
-> *bioRxiv, 2025*  
-> [https://doi.org/10.1101/2025.09.21.677530](https://doi.org/10.1101/2025.09.21.677530)
+> *Nature Communications, 2026*  
+> [https://doi.org/10.1038/s41467-026-74272-w](https://doi.org/10.1038/s41467-026-74272-w)
